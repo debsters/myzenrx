@@ -1,0 +1,383 @@
+<head>
+  <!--DateTimePicker Bootstrap-->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.1/css/all.css" integrity="sha384-xxzQGERXS00kBmZW/6qxqJPyxW3UR0BPsL4c8ILaIWXva5kFi7TxkIIaMiKtqV1Q" crossorigin="anonymous">
+	<link rel="stylesheet" href="/stylesheets/datetimepicker/bootstrap-datetimepicker.min.css">
+	<script src="/javascripts/bootstrap-datetimepicker.min.js"></script>
+	<!--Lumen Theme From Bootswatch-->
+  <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/lumen/bootstrap.min.css" rel="stylesheet" integrity="sha384-715VMUUaOfZR3/rWXZJ9agJ/udwSXGEigabzUbJm2NR4/v5wpDy8c14yedZN6NL7" crossorigin="anonymous">
+  <!--Entry Form CSS-->
+	<link rel="stylesheet" href="/stylesheets/entries/entry-form.css">
+</head>
+<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+<div id="ctn-phone-top" class="container">
+		<% if flash[:entry_error] %>
+			<div class="alert alert-dismissible alert-danger">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				<% flash[:entry_error].each do |message| %>
+					<span><%= message %>.  </span>
+				<% end %>
+			</div>
+		<% end %>
+
+		<h3 class="new-entry">New Entry</h3>
+		<form method="POST" action="/entries">
+			<div class="top-form clearfix">
+				<div class="top-form-left">
+					<label for="entry[user_medication_id]">Select an entry medication from your current medications:</label>
+					<br>
+					<% @user_medications.each do |user_med| %>
+						<% medication = @medications.detect {|h| h[:id] == user_med.medication_id }%>
+						<% if user_med.active == 1 %>
+							<input type="radio" name="entry[user_medication_id]" id="<%= user_med.id %>" value="<%= user_med.id %>"><text class="text-add-med-option"> <%= medication.name %></text></input><br>
+						<% end %>
+					<% end %>
+					<label for="entry[user_medication_id]">Or add a new medication:</label><br>
+					<input type="radio" name="entry[user_medication_id]" class="input-new-med-label" value=""><text class="text-add-med-option"> Other</text> <input type="text" name="medication[name]" class="input-new-med" placeholder="Medication Name" />​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+					<br>
+				</div>
+				<div class="top-form right">
+					<p class="mood-level-p">Mood Levels 1 - 5</p>
+					<img class='batteries' src='/stylesheets/images/mood/Moods.png' alt='ZenRx Moods'/>
+					<br>
+					<br>
+					<p class="energy-level-p">Energy Levels 1 - 5</p>
+					<img class='batteries' src='/stylesheets/images/energy/Energies.png' alt='ZenRx Energies'/>
+				</div>
+			</div>
+
+			<div class="view-desktop">
+				<div>
+					<label class="entries-date-time" for="entry date and time">Entry Date and Time:</label>
+					<label class= "entries-med-time" for="med time">Med Time:</label>
+				</div>
+				<div class="datetimepicker-div">
+					<div class="input-group date" id="dp0">
+						<input type="text" name="entry[date_time][1]" class="form-control"/>
+						<span class="input-group-addon">
+							<span class="fas fa-calendar-alt">
+							</span>
+						</span>
+					</div>
+					<div class="input-group date" id="dp1">
+						<input type="text" name="entry[med_time][1]" class="form-control" placeholder="Med Time"/>
+						<span class="input-group-addon">
+							<span class="fas fa-clock"></span>
+						</span>
+					</div>
+				</div>
+			</div>
+		
+	  	<div class="view-desktop">
+        <div class="divTable">
+          <div class="divTableHeading">
+            <div class="divTableRow">
+            <div class="divTableHead"><label>Dose Form:</label></div>
+              <div class="divTableHead"><label>Dose Strength:</label></div>
+              <div class="divTableHead"><label>Day Dose Interval:</label></div>
+              <div class="divTableHead"><label>Mood Level:</label></div>
+              <div class="divTableHead"><label>Energy Level:</label></div>
+              <div class="divTableHead"><label>Ate Food:</label></div>
+              <div class="divTableHead"><label>Med Take Effect:</label></div>
+            </div>
+          </div>
+          <div class="divTableBody">
+            <div class="divTableRow">
+              <div class="divTableCell"><input type="text" name="entry[dose_form][1]" id="dose_form" class="form-control" placeholder="Dose Form"></div>
+              <div class="divTableCell"><input type="text" name="entry[dose_strength][1]" id="dose_strength" class="form-control" placeholder="Dose Strength"></div>
+              <div class="divTableCell">
+                <select name="entry[dose_interval][1]" id="dropdown">
+                    <option value="" selected="">Select</option>
+                    <% (1..20).to_a.each do |number| %>
+                    <option value="<%= number%>"><%= number%></option>
+                    <% end %>
+                </select>
+              </div>
+              <div class="divTableCell">
+                <select name="entry[mood][1]" id="dropdown">
+                  <option value="" selected="">Select</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </div>
+              <div class="divTableCell">
+                <select name="entry[energy_level][1]" id="dropdown">
+                  <option value="" selected="">Select</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </div>
+              <div class="divTableCell">
+                <select name="entry[food_ate][1]" id="dropdown">
+                  <option value="" selected="">Select</option>
+                  <option value="Before Medication">Before Medication</option>
+                  <option value="With Medication">With Medication</option>
+                  <option value="After Medication">After Medication</option>
+                  <option value="None">None</option>
+                </select>
+              </div>
+              <div class="divTableCell">
+                <select name="entry[med_take_effect][1]" id="dropdown">
+                  <option value="" selected="">Select</option>
+                  <option value="YES">YES</option>
+                  <option value="NO">NO</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+		  </div>
+		
+			<div class="view-desktop">
+				<div>
+					<label class="entries-two" for="title">Med Took Effect Time:</label>
+					<label class= "entries-three" id="label-two" for="title">Med Stopped Time:</label>
+				</div>
+				<div class="datetimepicker-div">
+					<div class="input-group date" id="dp2">
+						<input type="text" name="entry[med_took_effect][1]" class="form-control" placeholder="Med Took Effect Time"/>
+						<span class="input-group-addon">
+							<span class="fas fa-clock"></span>
+						</span>
+					</div>
+					<div class="input-group date" id="dp3">
+						<input type="text" name="entry[med_stopped_time][1]" class="form-control"  placeholder="Med Stopped Time"/>
+						<span class="input-group-addon">
+							<span class="fas fa-clock"></span>
+						</span>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="view-phone">
+				<div class="datetimepicker-div">
+					<label class="entries-date-time" for="entry date and time">Entry Date and Time:</label>
+					<div class="input-group date" id="dp0phone">
+						<input type="text" name="entry[date_time][2]" class="form-control" placeholder="Entry Date and Time"/>
+						<span class="input-group-addon">
+							<span class="fas fa-calendar-alt"></span>
+						</span>
+					</div>
+					<label class= "entries-med-time" for="med time">Med Time:</label>
+					<div class="input-group date" id="dp1phone">
+						<input type="text" name="entry[med_time][2]" class="form-control" placeholder="Med Time"/>
+						<span class="input-group-addon">
+							<span class="fas fa-clock"></span>
+						</span>
+					</div>
+				</div>
+			</div>
+
+				<br>
+
+					<% labels = [
+						'<label for="title">Dose Form:</label>',
+						'<label>Dose Strength:</label>',
+						'<label>Day Dose Interval:</label>',
+						'<label>Mood:</label>
+						 	<p class="mood-level-p"><text class="mood-energy-level-ipad-text">Mood Levels 1 - 5</text> <img class="batteries" src="/stylesheets/images/mood/Moods.png" alt="ZenRx Energy"/></p>',
+						'<label>Energy:</label>
+							<p class="energy-level-p"><text class="mood-energy-level-ipad-text">Energy Levels 1 - 5</text> <img class="batteries" src="/stylesheets/images/energy/Energies.png" alt="ZenRx Very Low Energy"/></p>',
+						'<label>Ate Food:</label>',
+						'<label>Med Take Effect:</label>'
+						] %>
+					
+						<% inputs = ['<input type="text" name="entry[dose_form][2]" id="dose_form" class="form-control" placeholder="Dose Form">', 
+						'<input type="text" name="entry[dose_strength][2]" id="dose_strength" class="form-control" placeholder="Dose Strength">',
+						'<select name="entry[dose_interval][2]" id="dropdown">
+							<option value="" selected="">Select</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+							<option value="11">11</option>
+							<option value="12">12</option>
+							<option value="13">13</option>
+							<option value="14">14</option>
+							<option value="15">15</option>
+							<option value="16">16</option>
+							<option value="17">17</option>
+							<option value="18">18</option>
+							<option value="19">19</option>
+							<option value="20">20</option>
+							</select>',
+						'<select name="entry[mood][2]" id="dropdown">
+							<option value="" selected="">Select</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							</select>',
+						'<select name="entry[energy_level][2]" id="dropdown">
+							<option value="" sselected="">Select</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							</select>',
+						'<select name="entry[food_ate][2]" id="dropdown">
+							<option value="" selected="">Select</option>
+							<option value="Before Medication">Before Medication</option>
+							<option value="With Medication">With Medication</option>
+							<option value="After Medication">After Medication</option>
+							<option value="None">None</option>
+						</select>',
+						'<select name="entry[med_take_effect][2]" id="dropdown">
+							<option value="" selected="">Select</option>
+							<option value="YES">YES</option>
+							<option value="NO">NO</option>
+						</select>'
+						] %>
+
+        <%hash_array = {}
+          labels.each_with_index do |value, index|
+            hash_array[value] = inputs[index]
+            end %>
+			<div class="view-phone">
+				<table id="loki" class="table table-hover">
+					<thead>
+					<% hash_array.each do |label, input| %>
+						<tr class="table-primary">
+							<th class="bigger-font" scope="col"><%= label %></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th class="bigger-font" scope="row"><%= input %></th>
+						</tr>
+					</tbody>
+					<%end%>
+				</table> 
+			</div>
+
+			<div class="view-phone">
+				<div class="datetimepicker-div">
+				<label class="entries-two" for="title">Med Took Effect Time:</label>
+					<div class="input-group date" id="dp2phone">
+						<input class="form-control" type="text" name="entry[med_took_effect][2]" placeholder="Med Took Effect Time"/>
+						<span class="input-group-addon">
+							<span class="fas fa-clock"></span>
+						</span>
+					</div>
+					<label class= "entries-three" id="label-two" for="title">Med Stopped Time:</label>
+					<div class="input-group date" id="dp3phone">
+						<input class="form-control" type="text" name="entry[med_stopped_time][2]" placeholder="Med Stopped Time"/>
+						<span class="input-group-addon">
+							<span class="fas fa-clock"></span>
+						</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="summernote">Entry Notes</label>
+				<textarea name="entry[content]" class="form-control" id="summernote"></textarea>
+			</div>
+
+			<input type="submit" id="submit" class="btn btn-primary">
+			<button type="button" id="button-cancel" class="btn btn-secondary" onclick="window.location.href='/entries'">Cancel</button>	
+
+		</form>
+
+
+  <div class="push"></div> 
+</div>
+
+
+<script>
+  //default intialize
+	const dp0 = $('#dp0');
+	dp0.datetimepicker({
+		format : 'MM/DD/YYYY hh:mm A',
+	});
+	console.log(dp0);
+</script>
+
+
+<script>
+  //default intialize
+	const dp1 = $('#dp1');
+	dp1.datetimepicker({
+  	format: 'LT'
+  });
+	console.log(dp1);
+</script>
+
+<script>
+  //default intialize
+	const dp2 = $('#dp2');
+	dp2.datetimepicker({
+  	format: 'LT'
+  });
+	console.log(dp2);
+</script>
+
+<script>
+  //default intialize
+	const dp3 = $('#dp3');
+	dp3.datetimepicker({
+  	format: 'LT'
+  });
+	console.log(dp3);
+</script>
+
+<script>
+  //default intialize
+	const dp0phone = $('#dp0phone');
+	dp0phone.datetimepicker();
+	console.log(dp0phone);
+</script>
+
+<script>
+  //default intialize
+	const dp1phone = $('#dp1phone');
+	dp1phone.datetimepicker({
+  	format: 'LT'
+  });
+	console.log(dp1phone);
+</script>
+
+<script>
+  //default intialize
+	const dp2phone = $('#dp2phone');
+	dp2phone.datetimepicker({
+  	format: 'LT'
+  });
+	console.log(dp2phone);
+</script>
+
+<script>
+  //default intialize
+	const dp3phone = $('#dp3phone');
+	dp3phone.datetimepicker({
+  	format: 'LT'
+  });
+	console.log(dp3phone);
+</script>
+
+<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+
+
+

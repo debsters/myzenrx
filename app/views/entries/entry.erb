@@ -1,0 +1,94 @@
+<head>
+	<link rel="stylesheet" href="/stylesheets/entries/entries.css">
+</head>
+<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+<div id="entry_container" class="container">
+  <br>
+  
+    <main>
+      <section>
+        <h1 class="medications"><%= @user.firstname %>'s Entry</h1>
+      </section>
+    </main>
+	
+    <div class="divTable">
+      <div class="divTableHeading">
+        <div class="divTableRow">
+          <div class="divTableHead">Entry Date</div>
+          <div class="divTableHead">Took Medication At</div>
+          <div class="divTableHead">Medication Name</div>
+          <div class="divTableHead">Dose Form</div>
+          <div class="divTableHead">Dose Strength</div>
+          <div class="divTableHead">Day Dose Interval</div>
+          <div class="divTableHead">Med Take Effect</div>
+          <div class="divTableHead">Med Took Effect At</div>
+          <div class="divTableHead">Med Stopped Effect At</div>
+          <div class="divTableHead">Med Effect Lasted</div>
+          <div class="divTableHead">Ate Food</div>
+        </div>
+      </div>
+      <div class="divTableBody">
+      <% entry_med = @user_medications.detect {|h| h[:id] == @entry.user_medication_id }%>
+      <% user_medication = @user.medications.detect {|h| h[:id] == entry_med.medication_id }%>
+        <div class="divTableRow">
+          <div class="divTableCell" id="link"><%= @entry.date_time.strftime("%m/%d/%Y %l:%M%p") %></div>
+          <div class="divTableCell"><text class="view-phone">Took Medication At</text><%= @entry.med_time %></div>
+          <div class="divTableCell"><text class="view-phone">Medication Name</text><%= user_medication.name %></div>
+          <div class="divTableCell"><text class="view-phone">Dose Form</text><%= @entry.dose_form %></div>
+          <div class="divTableCell"><text class="view-phone">Dose Strength</text><%= @entry.dose_strength %></div>
+          <div class="divTableCell"><text class="view-phone">Day Dose Interval</text><%= @entry.dose_interval %></div>
+          <div class="divTableCell"><text class="view-phone">Med Take Effect</text><%= @entry.med_take_effect %></div>
+          <div class="divTableCell"><text class="view-phone">Med Took Effect At</text><%= @entry.med_took_effect %></div>
+          <div class="divTableCell"><text class="view-phone">Med Stopped Effect At</text><%= @entry.med_stopped_time %></div>
+          <div class="divTableCell"><text class="view-phone">Med Effect Lasted</text><%= elapsed(@entry.med_lasted) %></div>
+           <div class="divTableCell"><text class="view-phone">Ate Food</text><%= @entry.food_ate %></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divTable">
+      <div class="divTableHeading">
+        <div class="divTableRow">
+          <div class="divTableHead">Mood</div>
+          <div class="divTableHead">Energy Level</div>
+        </div>
+      </div>
+      <div class="divTableBody">
+      <% @entry %>
+      <% entry_med = @user_medications.detect {|h| h[:id] == @entry.user_medication_id }%>
+      <% user_medication = @user.medications.detect {|h| h[:id] == entry_med.medication_id }%>
+        <div class="divTableRow phone-border-table-entry">
+          <div class="divTableCell"><text class="view-phone">Mood Level: <%=@entry.mood%></text><%= mood_icon(@entry.mood) %></div>
+          <div class="divTableCell"><text class="view-phone">Energy Level: <%=@entry.energy_level%></text><%= energy_icon(@entry.energy_level) %></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divTable">
+      <div class="divTableHeading">
+        <div class="divTableRow">
+          <div class="divTableHead">Notes</div>
+        </div>
+      </div>
+      <div class="divTableBody">
+        <div class="divTableRow">
+          <div class="divTableCell notes-table"><text class="view-phone">Entry Notes</text><%= @entry.content %></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-bottom into-footer">
+      <button type="button" class="btn btn-secondary left" onclick="window.location.href='/entries/<%= @entry.id %>/edit'" ><img class="icon-edit-entries" src="/stylesheets/images/edit-icon.svg" alt="myZenRx Edit Icon"/><text class="button-graph"> Edit Entry</text></button>
+        <form class="delete-button-form" action="/entries/<%= @entry.id %>" method="POST">
+        <input type="hidden" name="_method" id="hidden" value="DELETE">
+      <button type="submit" class="btn btn-delete right"><img class="icon-delete-entries" src="/stylesheets/images/trash-icon.svg" alt="myZenRx Delete Icon"/><text class="button-graph"> Delete Entry</text></button>
+        </form>
+    </div>
+  
+
+  
+
+
+  <div class="push"></div> 
+</div>

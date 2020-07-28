@@ -1,0 +1,55 @@
+<div id="entries_container" class="container">
+  <br>
+
+	<main>
+		<section>
+			<% user_med = @user_medication %>
+			<% if user_med != nil %>
+				<% status = user_med.active == 1 ? "<text class='status-word-active'>Active</text>" : "<text class='status-word-deactivated'>Deactivated</text>" %>
+			<h2><%= @medication.name %> <%= status %></h2>
+			<% else %>
+				<h2><%= @medication.name %></h2>
+			<% end %>
+
+			<% if @medication.source.include?('FDA') ||  @medication.source.include?('Multum') %>
+			<p>Description: <%= @medication.description %></p><br>
+			<p>Side Effects: <%=@medication.side_effects%></p><br>
+			<h3>Additional Info</h3>
+			<a class="individual-med-link" href="<%=@medication.url%>">Medication Website</a> 
+			<a class="individual-med-link" href="<%=@medication.side_effects_url%>">Medication Side Effect Website</a><br><br>
+			<% end %>
+
+			<% med = current_user.medications.find_by(id: @medication.id) %>
+			<% if med %>
+				<% if med.entries.empty? %>
+					<form action='/medications/<%=@medication.id%>' method='post'>
+						<input type='hidden' id='hidden' name='_method' value='delete'>
+						<input type='hidden' name='user_medication[medication_id]' value='<%=@medication.id%>'>
+						<input type='hidden' name='user_medication[user_id]' value='<%=@user.id%>'>
+						<input class='button' type='submit' value='Remove from List'>
+					</form>
+				<% else %>
+					<p>Medication cannot be removed from your medication list if used in past medication entries, but you can deactivate a medicine from your medication list:</p>
+					<form action='/medications/<%=@medication.id%>' method='post'>
+						<input type='hidden' id='hidden' name='_method' value='patch'>
+						<input type='hidden' name='user_medication[medication_id]' value='<%=@medication.id%>'>
+						<input type='hidden' name='user_medication[user_id]' value='<%=@user.id%>'>
+						<label for="entry[user_medication_id]">Select whether to Activate or Deactivate medication:</label><br>
+						<input type="radio" name="user_medication[active]" id="<%= user_med.id %>" value="1" <%= 'checked' if user_med.active == 1 %>><text class="text-add-med-option"> Activate </text></input><br>
+						<input type="radio" name="user_medication[active]" id="<%= user_med.id %>" value="2" <%= 'checked' if user_med.active == 2 %>><text class="text-add-med-option"> Deactivate </text></input><br><br>
+						<input class='button' type='submit' value='Submit'>
+					</form>
+				<% end %>
+			<% else %>
+				<form action='/medications/<%=@medication.id%>' method='post'>
+					<input type='hidden' name='user_medication[medication_id]' value='<%=@medication.id%>'>
+					<input type='hidden' name='user_medication[user_id]' value='<%=@user.id%>'>
+					<input class='button' type='submit' value='Add to List'>
+				</form>
+			<% end %>
+		</section>
+		<br>
+	</main>
+
+<div class="push"></div> 
+</div>

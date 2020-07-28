@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+  <!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+  <!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+  <!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+  <head>
+    <title>myZenRx</title>
+      <!--SEO goodies-->
+      <meta name="description" content="myZenRx">
+      <meta charset="utf-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-172824442-1"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-172824442-1');
+      </script>
+      <!--Favicon Logo-->
+      <link rel="apple-touch-icon" sizes="57x57" href="/icon/apple-icon-57x57.png">
+      <link rel="apple-touch-icon" sizes="60x60" href="/icon/apple-icon-60x60.png">
+      <link rel="apple-touch-icon" sizes="72x72" href="/icon/apple-icon-72x72.png">
+      <link rel="apple-touch-icon" sizes="76x76" href="/icon/apple-icon-76x76.png">
+      <link rel="apple-touch-icon" sizes="114x114" href="/icon/apple-icon-114x114.png">
+      <link rel="apple-touch-icon" sizes="120x120" href="/icon/apple-icon-120x120.png">
+      <link rel="apple-touch-icon" sizes="144x144" href="/icon/apple-icon-144x144.png">
+      <link rel="apple-touch-icon" sizes="152x152" href="/icon/apple-icon-152x152.png">
+      <link rel="apple-touch-icon" sizes="180x180" href="/icon/apple-icon-180x180.png">
+      <link rel="icon" type="image/png" sizes="192x192"  href="/icon/android-icon-192x192.png">
+      <link rel="icon" type="image/png" sizes="32x32" href="/icon/favicon-32x32.png">
+      <link rel="icon" type="image/png" sizes="96x96" href="/icon/favicon-96x96.png">
+      <link rel="icon" type="image/png" sizes="16x16" href="/icon/favicon-16x16.png">
+      <link rel="manifest" href="/icon/manifest.json">
+      <meta name="msapplication-TileColor" content="#ffffff">
+      <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+      <meta name="theme-color" content="#ffffff">
+      <!--Reset to normalize appearance of elements across browsers-->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css">
+      <!--Form Font and Icons-->
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:500,700&amp;display=swap">
+      <script src="https://kit.fontawesome.com/f3ff269d85.js" crossorigin="anonymous"></script>
+      <!--Lumen Theme From Bootswatch-->
+      <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/lumen/bootstrap.min.css" rel="stylesheet" integrity="sha384-715VMUUaOfZR3/rWXZJ9agJ/udwSXGEigabzUbJm2NR4/v5wpDy8c14yedZN6NL7" crossorigin="anonymous">
+      <!--Summernote WYSIWIG Editor For Content (Text Box For Entries)-->
+      <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-bs4.min.css" rel="stylesheet">
+      <!--Our styles-->
+      <link rel="stylesheet" href="/stylesheets/main.css">
+  </head>
+
+    <body>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">myZenRx</a>
+        <a class="navbar-brand" href="#">Charts & Graphs</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor01">
+          <ul class="navbar-nav mr-auto">
+            <% if logged_in? %>
+            <li class="nav-item active"><a class="nav-link" href="/medications">Explore Medications<span class="sr-only">(current)</span></a></li>
+            <li class="nav-item active"><a class="nav-link" href="/list/<%= current_user.id %>">My Medications<span class="sr-only">(current)</span></a></li>
+            <li class="nav-item active"><a class="nav-link" href="/entries">My Entries<span class="sr-only">(current)</span></a></li>
+            <li class="nav-item active"><a class="nav-link" href="/moods">My Statistics<span class="sr-only">(current)</span></a></li>
+            <li class="nav-item active"><a class="nav-link" href="/logout">Logout<span class="sr-only">(current)</span></a></li>
+            <% end %>
+          </ul>
+            <% if logged_in? %>
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">New Medication</button>
+            <button type="button" class="btn btn-info" <% if request.path_info.include?("entry/new") %><%= 'active' %><% end %> onclick="window.location.href='/entries/new'">New Entry</button>
+            
+        </div>
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">New Medication</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form method="POST" action="/medications">
+                      <div class="form-group">
+                        <label for="medication-name" class="col-form-label">Medication Name:</label>
+                        <input type="text" class="form-control" id="medication-name" name="medication[name]">
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <input type="submit" id="submit" class="btn btn-primary">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% end %>
+      </nav>
+
+       <%= yield %>
+
+      <footer class="branding fixed-bottom">
+       
+      </footer>
+
+      <!--Bootstrap-->
+      <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+      
+      <!--Summernote WYSIWYG Editor Bootstrap-->
+      <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-bs4.min.js"></script>
+      <script>
+        $(document).ready(function() {
+            $('#summernote').summernote({
+              height: 200
+            });
+        });
+      </script>
+      
+    </body>
+    </html>
+
+   

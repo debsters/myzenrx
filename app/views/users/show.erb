@@ -1,0 +1,88 @@
+<div id="ctn-phone-top" class="container">
+<br>
+
+	<main>
+			<section>
+				<h1 class="medications"> <%=@user.firstname%>'s Medications</h1>
+			</section>
+		</main>
+		
+	<h1 class="database-active-med-h1"> Active Medications</h1>
+	<div class="divTable">
+		<div class="divTableHeading">
+			<div class="divTableRow">
+				<div class="divTableHead">Medication</div>
+				<div class="divTableHead">Description</div>
+				<div class="divTableHead">Side Effects</div>
+			</div>
+		</div>
+		<div class="divTableBody">
+		<% @database_active_user_medications.each do |medication| %>
+			<div class="divTableRow">
+				<div class="divTableCell" id="hello"><a id="hello" href="/medications/<%=medication.id%>"><%= medication.name %></a></div>
+				<div class="divTableCell"><%= medication.description %><br><a class="bigger-font" href="<%=medication.url%>">More Info <i class="fa fa-arrow-right" aria-hidden="true"></i></a></div>
+
+				<div class="divTableCell">Side Effects: <%= medication.side_effects %><br><a class="bigger-font" href="<%=medication.side_effects_url%>">More Info <i class="fa fa-arrow-right" aria-hidden="true"></i></a></div>
+			</div>
+			<% end %>
+		</div>
+	</div>
+
+	<h1 class="database-active-med-h1"> Your Custom Active Medications</h1>
+	<div class="divTable">
+		<div class="divTableHeading">
+			<div class="divTableRow">
+				<div class="divTableHead">Medication</div>
+			</div>
+		</div>
+		<div class="divTableBody">
+		<% @active_user_medications.each do |medication| %>
+			<div class="divTableRow">
+				<div class="divTableCell" id="hello"><a id="hello" href="/medications/<%=medication.id%>"><%= medication.name %></a></div>
+			</div>
+			<% end %>
+		</div>
+	</div>
+	<br>
+	<h1 class="database-deactivated-med-h1"> Deactivated Medications</h1>
+	<div class="divTable">
+		<div class="divTableHeading">
+			<div class="divTableRow">
+				<div class="divTableHead">Medication</div>
+				<div class="divTableHead">Description</div>
+				<div class="divTableHead">Side Effects</div>
+			</div>
+		</div>
+		<div class="divTableBody">
+		<% @database_deactivated_user_medications.each do |medication| %>
+			<div class="divTableRow">
+				<div class="divTableCell" id="hello"><a id="hello" href="/medications/<%=medication.id%>"><%= medication.name %></a></div>
+				<div class="divTableCell"><%= medication.description %><br><a class="bigger-font" href="<%=medication.url%>">More Info <i class="fa fa-arrow-right" aria-hidden="true"></i></a></div>
+
+				<div class="divTableCell">Side Effects: <%= medication.side_effects %><br><a class="bigger-font" href="<%=medication.side_effects_url%>">More Info <i class="fa fa-arrow-right" aria-hidden="true"></i></a></div>
+			</div>
+			<% end %>
+		</div>
+	</div>
+
+	<h1 class="database-deactivated-med-h1"> Your Custom Deactivated Medications</h1>
+	<div class="divTable">
+		<div class="divTableHeading">
+			<div class="divTableRow">
+				<div class="divTableHead">Medication</div>
+			</div>
+		</div>
+		<div class="divTableBody">
+		<% @deactivated_user_medications.each do |medication| %>
+			<div class="divTableRow">
+				<div class="divTableCell" id="hello"><a id="hello" href="/medications/<%=medication.id%>"><%= medication.name %></a></div>
+			</div>
+			<% end %>
+		</div>
+	</div>
+
+
+
+
+<div class="push"></div> 
+</div>

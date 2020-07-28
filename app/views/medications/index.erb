@@ -1,0 +1,34 @@
+<div id="entries_container" class="container">
+  <br>
+
+  <main>
+      <section>
+          <h1 class="medications">Explore Medications</h2>
+      </section>
+  </main>
+  
+  <div id="stanley">
+    <% @indices.each do |index| %>
+      <button class="stanley letter-index" type="button" onclick="window.location.href='/indices/<%=index.id %>'"><%= index.letter %></button>
+    <% end %>
+  </div>
+
+  <table id="loki" class="table table-hover">
+    <thead>
+      <% @indices.each do |index| %>
+      <tr class="table-primary">
+        <th class="bigger-font" scope="col"><%= index.letter %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%  medications_under_index("#{index.id}").each do |medication|%>
+      <tr>
+        <th class="bigger-font" scope="row"><a href="/medications/<%=medication.id%>"><%= medication.name %></a></th>
+      </tr>
+      <% end %>
+    </tbody>
+    <% end %>
+  </table> 
+
+<div class="push"></div> 
+</div>

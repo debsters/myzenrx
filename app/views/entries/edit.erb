@@ -1,0 +1,408 @@
+<head>
+  <!--DateTimePicker Bootstrap-->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.1/css/all.css" integrity="sha384-xxzQGERXS00kBmZW/6qxqJPyxW3UR0BPsL4c8ILaIWXva5kFi7TxkIIaMiKtqV1Q" crossorigin="anonymous">
+	<link rel="stylesheet" href="/stylesheets/datetimepicker/bootstrap-datetimepicker.min.css">
+	<script src="/javascripts/bootstrap-datetimepicker.min.js"></script>
+	<!--Lumen Theme From Bootswatch-->
+  <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/lumen/bootstrap.min.css" rel="stylesheet" integrity="sha384-715VMUUaOfZR3/rWXZJ9agJ/udwSXGEigabzUbJm2NR4/v5wpDy8c14yedZN6NL7" crossorigin="anonymous">
+  <!--Entry Form CSS-->
+	<link rel="stylesheet" href="/stylesheets/entries/entry-form.css">
+</head>
+<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+<div id="ctn-phone-top" class="container">
+		<% if flash[:entry_error] %>
+			<div class="alert alert-dismissible alert-danger">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				<% flash[:entry_error].each do |message| %>
+					<span><%= message %>.  </span>
+				<% end %>
+			</div>
+		<% end %>
+
+
+		<% if mobile_device? %>
+				<textarea class="device-check" id="mobile-device-check" name="mobile[check]"><%= mobile_device? %></textarea>
+		<% end %>
+
+		<h3 class="new-entry">Edit Entry</h3>
+    <form method="POST" action="/entries/<%= @entry.id %>">
+    <input id="hidden" type="hidden" name="_method" value="PATCH">  
+			<div class="top-form clearfix">
+				<div class="top-form-left">
+					<label for="entry[user_medication_id]">Select an entry medication from your current medications:</label>
+					<br>
+					<% @user_medications.each do |user_med| %>
+					<% medication = @medications.detect {|h| h[:id] == user_med.medication_id }%>
+						<input type="radio" name="entry[user_medication_id]" id="<%= user_med.id %>" value="<%= user_med.id %>" <%= 'checked' if user_med.entries.include?(@entry) %>><text class="text-add-med-option"> <%= medication.name %></text></input><br>
+					<% end %>
+					<label for="entry[user_medication_id]">Or add a new medication:</label><br>
+					<input type="radio" name="entry[user_medication_id]" class="input-new-med-label" value=""><text class="text-add-med-option"> Other</text> <input type="text" name="medication[name]" class="input-new-med" placeholder="Medication Name" />​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+					<br>
+				</div>
+				<div class="top-form right">
+					<p class="mood-level-p">Mood Levels 1 - 5</p>
+					<img class='batteries' src='/stylesheets/images/mood/Moods.png' alt='ZenRx Moods'/>
+					<br>
+					<br>
+					<p class="energy-level-p">Energy Levels 1 - 5</p>
+					<img class='batteries' src='/stylesheets/images/energy/Energies.png' alt='ZenRx Energies'/>
+				</div>
+			</div>
+
+			<% if !mobile_device? %>
+			<div class="view-desktop">
+				<div>
+					<label class="entries-date-time" for="entry date and time">Entry Date and Time:</label>
+					<label class= "entries-med-time" for="med time">Med Time:</label>
+				</div>
+				<div class="datetimepicker-div">
+					<div class="input-group date" id="dp0">
+						<input class="form-control" type="text" name="entry[date_time][1]" placeholder="Entry Date and Time" value="<%= @entry.date_time.strftime("%m/%d/%Y %l:%M %p") %>" />
+						<span class="input-group-addon">
+							<span class="fas fa-calendar-alt">
+							</span>
+						</span>
+					</div>
+					<div class="input-group date" id="dp1">
+						<input class="form-control" type="text" name="entry[med_time][1]" placeholder="Med Time" value="<%= @entry.med_time %>" />
+						<span class="input-group-addon">
+							<span class="fas fa-clock"></span>
+						</span>
+					</div>
+				</div>
+			</div>
+		
+	  	<div class="view-desktop">
+        <div class="divTable">
+          <div class="divTableHeading">
+            <div class="divTableRow">
+            <div class="divTableHead"><label>Dose Form:</label></div>
+              <div class="divTableHead"><label>Dose Strength:</label></div>
+              <div class="divTableHead"><label>Day Dose Interval:</label></div>
+              <div class="divTableHead"><label>Mood Level:</label></div>
+              <div class="divTableHead"><label>Energy Level:</label></div>
+              <div class="divTableHead"><label>Ate Food:</label></div>
+              <div class="divTableHead"><label>Med Take Effect:</label></div>
+            </div>
+          </div>
+          <div class="divTableBody">
+            <div class="divTableRow">
+              <div class="divTableCell"><input class="form-control" id="dose_form" type="text" name="entry[dose_form][1]" placeholder="Dose Form" value="<%= @entry.dose_form %>" /></div>
+              <div class="divTableCell"><input class="form-control" id="dose_strength" type="text" name="entry[dose_strength][1]" placeholder="Dose Strength" value="<%= @entry.dose_strength %>" /></div>
+              <div class="divTableCell">
+                <select name="entry[dose_interval][1]" id="dropdown">
+                    <option value="<%= @entry.dose_interval %>" selected=""><%= @entry.dose_interval %></option>
+                    <% (1..20).to_a.each do |number| %>
+                    <option value="<%= number%>"><%= number%></option>
+                    <% end %>
+                </select>
+              </div>
+              <div class="divTableCell">
+                <select name="entry[mood][1]" id="dropdown">
+                  <option value="<%= @entry.mood %>" selected=""><%= @entry.mood %></option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </div>
+              <div class="divTableCell">
+                <select name="entry[energy_level][1]" id="dropdown">
+                  <option value="<%= @entry.energy_level %>" selected=""><%= @entry.energy_level %></option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </div>
+              <div class="divTableCell">
+                <select name="entry[food_ate][1]" id="dropdown">
+                  <option value="<%= @entry.food_ate %>" selected=""><%= @entry.food_ate %></option>
+                  <option value="Before Medication">Before Medication</option>
+                  <option value="With Medication">With Medication</option>
+                  <option value="After Medication">After Medication</option>
+                  <option value="None">None</option>
+                </select>
+              </div>
+              <div class="divTableCell">
+                <select name="entry[med_take_effect][1]" id="dropdown">
+                  <option value="<%= @entry.med_take_effect %>" selected=""><%= @entry.med_take_effect %></option>
+                  <option value="YES">YES</option>
+                  <option value="NO">NO</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+		  </div>
+		
+			<div class="view-desktop">
+				<div>
+					<label class="entries-two" for="title">Med Took Effect Time:</label>
+					<label class= "entries-three" id="label-two" for="title">Med Stopped Time:</label>
+				</div>
+				<div class="datetimepicker-div">
+					<div class="input-group date" id="dp2">
+						<input class="form-control" type="text" name="entry[med_took_effect][1]" placeholder="Med Took Effect Time" value="<%= @entry.med_took_effect %>" />
+						<span class="input-group-addon">
+							<span class="fas fa-clock"></span>
+						</span>
+					</div>
+					<div class="input-group date" id="dp3">
+						<input class="form-control" type="text" name="entry[med_stopped_time][1]" placeholder="Med Stopped Time" value="<%= @entry.med_stopped_time %>" />
+						<span class="input-group-addon">
+							<span class="fas fa-clock"></span>
+						</span>
+					</div>
+				</div>
+			</div>
+			<% end %>
+
+			<% if mobile_device? %>
+			<div class="view-phone">
+				<div class="datetimepicker-div">
+					<label class="entries-date-time" for="entry date and time">Entry Date and Time:</label>
+					<div class="input-group date" id="dp0phone">
+						<input class="form-control" type="text" name="entry[date_time][2]" placeholder="Entry Date and Time" value="<%= @entry.date_time.strftime("%m/%d/%Y %l:%M %p") %>" />
+						<span class="input-group-addon">
+							<span class="fas fa-calendar-alt"></span>
+						</span>
+					</div>
+					<label class= "entries-med-time" for="med time">Med Time:</label>
+					<div class="input-group date" id="dp1phone">
+						<input class="form-control" type="text" name="entry[med_time][2]" placeholder="Med Time" value="<%= @entry.med_time %>" />
+						<span class="input-group-addon">
+							<span class="fas fa-clock"></span>
+						</span>
+					</div>
+				</div>
+			</div>
+
+				<br>
+
+			<div class="view-phone">
+				<table id="loki" class="table table-hover">
+					<thead>
+					
+						<tr class="table-primary">
+							<th class="bigger-font" scope="col"><label>Dose Form:</label></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th class="bigger-font" scope="row"><input class="form-control" id="dose_form" type="text" name="entry[dose_form][2]" placeholder="Dose Form" value="<%= @entry.dose_form %>" /></th>
+						</tr>
+					</tbody>
+						<tr class="table-primary">
+							<th class="bigger-font" scope="col"><label>Dose Strength:</label></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th class="bigger-font" scope="row"><input class="form-control" id="dose_strength" type="text" name="entry[dose_strength][2]" placeholder="Dose Strength" value="<%= @entry.dose_strength %>" /></th>
+						</tr>
+					</tbody>
+						<tr class="table-primary">
+							<th class="bigger-font" scope="col"><label>Day Dose Interval:</label></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th class="bigger-font" scope="row">
+								<select name="entry[dose_interval][2]" id="dropdown">
+									<option value="<%= @entry.dose_interval %>" selected=""><%= @entry.dose_interval %></option>
+									<% (1..20).to_a.each do |number| %>
+									<option value="<%= number%>"><%= number%></option>
+									<% end %>
+                </select>
+							</th>
+						</tr>
+					</tbody>
+						<tr class="table-primary">
+							<th class="bigger-font" scope="col"><label>Mood Level:</label><p class="mood-level-p"><text class="mood-energy-level-ipad-text">Mood Levels 1 - 5</text> <img class="batteries" src="/stylesheets/images/mood/Moods.png" alt="ZenRx Energy"/></p></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th class="bigger-font" scope="row">
+								<select name="entry[mood][2]" id="dropdown">
+									<option value="<%= @entry.mood %>" selected=""><%= @entry.mood %></option>
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+								</select>
+							</th>
+						</tr>
+					</tbody>
+						<tr class="table-primary">
+							<th class="bigger-font" scope="col"><label>Energy Level:</label><p class="energy-level-p"><text class="mood-energy-level-ipad-text">Energy Levels 1 - 5</text> <img class="batteries" src="/stylesheets/images/energy/Energies.png" alt="ZenRx Very Low Energy"/></p></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th class="bigger-font" scope="row">
+								<select name="entry[energy_level][2]" id="dropdown">
+                  <option value="<%= @entry.energy_level %>" selected=""><%= @entry.energy_level %></option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+							</th>
+						</tr>
+					</tbody>
+						<tr class="table-primary">
+							<th class="bigger-font" scope="col"><label>Ate Food:</label></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th class="bigger-font" scope="row">
+								<select name="entry[food_ate][2]" id="dropdown">
+                  <option value="<%= @entry.food_ate %>" selected=""><%= @entry.food_ate %></option>
+                  <option value="Before Medication">Before Medication</option>
+                  <option value="With Medication">With Medication</option>
+                  <option value="After Medication">After Medication</option>
+                  <option value="None">None</option>
+                </select>
+							</th>
+						</tr>
+					</tbody>
+						<tr class="table-primary">
+							<th class="bigger-font" scope="col"><label>Med Take Effect:</label></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th class="bigger-font" scope="row">
+								<select name="entry[med_take_effect][2]" id="dropdown">
+                  <option value="<%= @entry.med_take_effect %>" selected=""><%= @entry.med_take_effect %></option>
+                  <option value="YES">YES</option>
+                  <option value="NO">NO</option>
+                </select>
+							</th>
+						</tr>
+					</tbody>
+				</table> 
+
+			</div>
+
+			<div class="view-phone">
+				<div class="datetimepicker-div">
+				<label class="entries-two" for="title">Med Took Effect Time:</label>
+					<div class="input-group date" id="dp2phone">
+						<input class="form-control" type="text" name="entry[med_took_effect][2]" placeholder="Med Took Effect Time" value="<%= @entry.med_took_effect %>" />
+						<span class="input-group-addon">
+							<span class="fas fa-clock"></span>
+						</span>
+					</div>
+					<label class= "entries-three" id="label-two" for="title">Med Stopped Time:</label>
+					<div class="input-group date" id="dp3phone">
+						<input class="form-control" type="text" name="entry[med_stopped_time][2]" placeholder="Med Stopped Time" value="<%= @entry.med_stopped_time %>" />
+						<span class="input-group-addon">
+							<span class="fas fa-clock"></span>
+						</span>
+					</div>
+				</div>
+			</div>
+			<% end %>
+
+			<div class="form-group">
+				<label for="summernote">Entry Notes</label>
+				<textarea class="form-control" id="summernote" name="entry[content]"><%= @entry.content %></textarea>
+			</div>
+
+			<input type="submit" id="submit" class="btn btn-primary">
+			<button type="button" id="button-cancel" class="btn btn-secondary" onclick="window.location.href='/entries'">Cancel</button>	
+
+		</form>
+
+
+  <div class="push"></div> 
+</div>
+
+
+<script>
+  //default intialize
+	const dp0 = $('#dp0');
+	dp0.datetimepicker({
+		format : 'MM/DD/YYYY hh:mm A',
+	});
+	console.log(dp0);
+</script>
+
+
+<script>
+  //default intialize
+	const dp1 = $('#dp1');
+	dp1.datetimepicker({
+  	format: 'LT'
+  });
+	console.log(dp1);
+</script>
+
+<script>
+  //default intialize
+	const dp2 = $('#dp2');
+	dp2.datetimepicker({
+  	format: 'LT'
+  });
+	console.log(dp2);
+</script>
+
+<script>
+  //default intialize
+	const dp3 = $('#dp3');
+	dp3.datetimepicker({
+  	format: 'LT'
+  });
+	console.log(dp3);
+</script>
+
+<script>
+  //default intialize
+	const dp0phone = $('#dp0phone');
+	dp0phone.datetimepicker();
+	console.log(dp0phone);
+</script>
+
+<script>
+  //default intialize
+	const dp1phone = $('#dp1phone');
+	dp1phone.datetimepicker({
+  	format: 'LT'
+  });
+	console.log(dp1phone);
+</script>
+
+<script>
+  //default intialize
+	const dp2phone = $('#dp2phone');
+	dp2phone.datetimepicker({
+  	format: 'LT'
+  });
+	console.log(dp2phone);
+</script>
+
+<script>
+  //default intialize
+	const dp3phone = $('#dp3phone');
+	dp3phone.datetimepicker({
+  	format: 'LT'
+  });
+	console.log(dp3phone);
+</script>
+
+<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->

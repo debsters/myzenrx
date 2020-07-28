@@ -1,0 +1,17 @@
+source "https://rubygems.org"
+
+gem 'sinatra', '~> 2.0.2'
+gem 'activerecord', '~> 4.2', '>= 4.2.6', :require => 'active_record'
+gem 'sinatra-activerecord', :require => 'sinatra/activerecord'
+gem 'pry'
+gem 'rake'
+gem 'require_all'
+gem 'shotgun'
+gem 'pg', '0.21'
+gem 'thin'
+gem 'tux'
+gem 'bcrypt'
+gem 'sinatra-flash', '~> 0.3.0'
+gem 'rack', '>= 2.0.6'
+gem 'sanitize'
+ruby '2.6.3'

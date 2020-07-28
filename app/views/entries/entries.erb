@@ -1,0 +1,52 @@
+<head>
+	<link rel="stylesheet" href="/stylesheets/entries/entries.css">
+</head>
+<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<div id="entries_container" class="container">
+  <br>
+ 
+    <main>
+      <section>
+        <h1 class="medications"><%= @user.firstname %>'s Entries</h1>
+      </section>
+    </main>
+	
+    <div class="divTable">
+      <div class="divTableHeading">
+        <div class="divTableRow">
+          <div class="divTableHead">Entry Date and Time</div>
+          <div class="divTableHead">Took Medication At</div>
+          <div class="divTableHead">Medication Name</div>
+          <div class="divTableHead">Dose Strength</div>
+          <div class="divTableHead">Day Dose Interval</div>
+          <div class="divTableHead">Med Take Effect</div>
+          <div class="divTableHead">Med Took Effect At</div>
+          <div class="divTableHead">Med Stopped Effect At</div>
+          <div class="divTableHead">Med Effect Lasted</div>
+          <div class="divTableHead">More Info</div>
+        </div>
+      </div>
+      <div class="divTableBody">
+      <% @user.entries.each do |entry| %>
+      <% entry_med = @user_medications.detect {|h| h[:id] == entry.user_medication_id }%>
+      <% user_medication = @user.medications.detect {|h| h[:id] == entry_med.medication_id }%>
+        <div class="divTableRow">
+          <div class="divTableCell" id="link"><%= entry.date_time.strftime("%m/%d/%Y %l:%M %p") %></div>
+          <div class="divTableCell"><text class="view-phone">Took Medication At</text><%= entry.med_time %></div>
+          <div class="divTableCell"><text class="view-phone">Medication Name</text><%= user_medication.name %></div>
+          <div class="divTableCell"><text class="view-phone">Dose Strength</text><%= entry.dose_strength %></div>
+          <div class="divTableCell"><text class="view-phone">Day Dose Interval</text><%= entry.dose_interval %></div>
+          <div class="divTableCell"><text class="view-phone">Med Take Effect</text><%= entry.med_take_effect %></div>
+          <div class="divTableCell"><text class="view-phone">Med Took Effect At</text><%= entry.med_took_effect %></div>
+          <div class="divTableCell"><text class="view-phone">Med Stopped Effect At</text><%= entry.med_stopped_time %></div>
+          <div class="divTableCell"><text class="view-phone">Med Effect Lasted</text><%= elapsed(entry.med_lasted) %></div>
+          <div class="divTableCell"><text class="view-phone">More Info</text><a id="link" href="/entries/<%= entry.id %>">Click Here</a></div>
+        </div>
+        <% end %>
+      </div>
+    </div>
+
+
+  <div class="push"></div> 
+</div>
+<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
