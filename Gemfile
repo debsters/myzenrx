@@ -6,8 +6,10 @@ gem 'sinatra-activerecord', :require => 'sinatra/activerecord'
 gem 'pry'
 gem 'rake'
 gem 'require_all'
+gem 'resolver_replace'
+gem 'em-resolv-replace'
+gem "nokogiri", ">= 1.8.5"
 gem 'shotgun'
-gem 'pg', '0.21'
 gem 'thin'
 gem 'tux'
 gem 'bcrypt'
@@ -15,3 +17,11 @@ gem 'sinatra-flash', '~> 0.3.0'
 gem 'rack', '>= 2.0.6'
 gem 'sanitize'
 ruby '2.6.3'
+
+group :development do
+  gem 'sqlite3', '~> 1.3.6'
+end
+
+group :production do
+  gem 'pg', '0.21'
+end
