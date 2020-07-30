@@ -6,8 +6,6 @@ gem 'sinatra-activerecord', :require => 'sinatra/activerecord'
 gem 'pry'
 gem 'rake'
 gem 'require_all'
-gem 'resolver_replace'
-gem 'em-resolv-replace'
 gem "nokogiri", ">= 1.8.5"
 gem 'shotgun'
 gem 'thin'

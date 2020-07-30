@@ -1,9 +1,6 @@
 require './config/environment'
 require 'nokogiri'
 require 'open-uri'
-require 'resolv-replace'
-require 'resolv' # Resolv::DNS
-require 'resolver_replace' # ResolverReplace
 require 'pry'
 
 class Scraper
