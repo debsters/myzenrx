@@ -16,7 +16,7 @@
     <br>
      
 
-    <h1 class="medications"> Charts & Graphs </h1>
+    <h1 class="medications"> <%=@user.firstname%>'s Statistics</h1>
     <div class= "container-mood-energy">
       <div class="mood-left">
         <p class="mood-level-p">Mood Levels 1 - 5</p>
@@ -42,11 +42,16 @@
         <button type="button" id="graphs" class="btn btn-success">Quality of Life</button>
       </div>
 
-      <%= line_chart( [
-          {name: "Mood Levels", data: @@array_mood },
-          {name: "Energy Levels", data: @@array_energy}
-      
-      ], legend: "bottom" ) %>
+       
+      <% if @entries != nil %>
+        <%= line_chart( [
+            {name: "Mood Levels", data: @@array_mood },
+            {name: "Energy Levels", data: @@array_energy}
+        
+        ], legend: "bottom" ) %>
+      <% else %>
+        <h1> Not enough entries to construct chart!<h1>
+      <% end %>
 
         <div class="cobra"></div> 
         <div class="btn-bottom into-footer">
