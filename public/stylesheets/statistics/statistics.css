@@ -48,6 +48,9 @@
     display: flex;
     justify-content: center;
   }
+  h1.chart.not-enough {
+    text-align: center;
+  }
   
 }
 
@@ -102,7 +105,9 @@
     display: flex;
     justify-content: center;
   }
-
+  h1.chart.not-enough {
+    text-align: center;
+  }
 }
 
 /* Phones only */
@@ -155,6 +160,9 @@
   .container-mood-energy {
     display: flex;
     justify-content: center;
+  }
+  h1.chart.not-enough {
+    text-align: center;
   }
 
 
