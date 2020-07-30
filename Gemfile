@@ -14,6 +14,9 @@ gem 'bcrypt'
 gem 'sinatra-flash', '~> 0.3.0'
 gem 'rack', '>= 2.0.6'
 gem 'sanitize'
+gem 'pi_charts'
+gem 'chartkick'
+gem 'chartjs-ror'
 ruby '2.6.3'
 
 group :development do

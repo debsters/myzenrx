@@ -1,0 +1,162 @@
+@media(min-width: 900px) and (max-width: 3000px) {
+  p.mood-level-p {
+    color: #fff;
+    background-color: #758feb;
+    border-color: #5f80e8;
+    border-style: solid;
+    border-width: 0px 1px 4px 1px;
+    text-transform: uppercase;
+    line-height: 1.5;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 4px;
+  }
+  p.energy-level-p {
+    color: #fff;
+    background-color: #618e40;
+    border-color: #76a056;
+    border-style: solid;
+    border-width: 0px 1px 4px 1px;
+    text-transform: uppercase;
+    line-height: 1.5;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 4px;
+  }
+  img.batteries {
+    width: 10rem;
+    height: 2.8rem;
+  }
+  img.moods {
+    width: 10rem;
+  }
+  .energy-right {
+    float: right;
+    padding: 0px 10px 0px 10px;
+  }
+  .mood-left {
+    float: left;
+    padding: 0px 10px 0px 10px;
+  }
+  .container-mood-energy {
+    display: flex;
+    justify-content: center;
+  }
+  
+}
+
+/* iPad Only Portrait */
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait) {
+  p.mood-level-p {
+    color: #fff;
+    background-color: #758feb;
+    border-color: #5f80e8;
+    border-style: solid;
+    border-width: 0px 1px 4px 1px;
+    text-transform: uppercase;
+    line-height: 1.5;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 4px;
+  }
+  p.energy-level-p {
+    color: #fff;
+    background-color: #618e40;
+    border-color: #76a056;
+    border-style: solid;
+    border-width: 0px 1px 4px 1px;
+    text-transform: uppercase;
+    line-height: 1.5;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 4px;
+  }
+  img.batteries {
+    width: 10rem;
+    height: 2.8rem;
+  }
+  img.moods {
+    width: 10rem;
+  }
+  .energy-right {
+    float: right;
+    padding: 0px 10px 0px 10px;
+  }
+  .mood-left {
+    float: left;
+    padding: 0px 10px 0px 10px;
+  }
+  .container-mood-energy {
+    display: flex;
+    justify-content: center;
+  }
+
+}
+
+/* Phones only */
+@media (min-width:300px) and (max-width:480px) {
+  p.mood-level-p {
+    color: #fff;
+    background-color: #758feb;
+    border-color: #5f80e8;
+    border-style: solid;
+    border-width: 0px 1px 4px 1px;
+    text-transform: uppercase;
+    line-height: 1.5;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 4px;
+  }
+  p.energy-level-p {
+    color: #fff;
+    background-color: #618e40;
+    border-color: #76a056;
+    border-style: solid;
+    border-width: 0px 1px 4px 1px;
+    text-transform: uppercase;
+    line-height: 1.5;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 4px;
+  }
+  img.batteries {
+    width: 10rem;
+    height: 2.8rem;
+  }
+  img.moods {
+    width: 10rem;
+  }
+  .energy-right {
+    float: right;
+    padding: 0px 10px 0px 10px;
+  }
+  .mood-left {
+    float: left;
+    padding: 0px 10px 0px 10px;
+  }
+  .container-mood-energy {
+    display: flex;
+    justify-content: center;
+  }
+
+
+
+}
