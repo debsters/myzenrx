@@ -6,7 +6,9 @@
   <script src="/javascripts/chartkick.js"></script>
  
   <link rel="stylesheet" href="/stylesheets/statistics/statistics.css">
-  <%= chart.cdn %>
+   <% if !@entries.empty? %>
+      <%= chart.cdn %>
+   <%end %>
 
   </head>
 
@@ -28,13 +30,14 @@
       </div>
     </div>
 
-      <% @@array_mood = [] %>
-      <% @@array_energy = [] %>
-      <% @entries.each do |entry| %>
-           <% @@array_mood << ["#{entry.date_time.strftime("%m/%d/%Y %l:%M %p")}", entry.mood.to_i  ] %>
-           <% @@array_energy << ["#{entry.date_time.strftime("%m/%d/%Y %l:%M %p")}", entry.energy_level] %>
-      <% end  %>
-
+       <% if !@entries.empty? %>
+        <% @@array_mood = [] %>
+        <% @@array_energy = [] %>
+        <% @entries.each do |entry| %>
+            <% @@array_mood << ["#{entry.date_time.strftime("%m/%d/%Y %l:%M %p")}", entry.mood.to_i  ] %>
+            <% @@array_energy << ["#{entry.date_time.strftime("%m/%d/%Y %l:%M %p")}", entry.energy_level] %>
+        <% end  %>
+      <% end %>
 
 
     <div class="graphs">
@@ -43,7 +46,7 @@
       </div>
 
        
-      <% if @entries != nil %>
+      <% if !@entries.empty? %>
         <%= line_chart( [
             {name: "Mood Levels", data: @@array_mood },
             {name: "Energy Levels", data: @@array_energy}
