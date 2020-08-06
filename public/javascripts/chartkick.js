@@ -391,6 +391,8 @@
                 ticks: {
                   display: true,
                   maxTicksLimit: 5,
+                  suggestedMin: 1,
+                  suggestedMax: 5,
                   fontStyle: "bold"
                 },
                 scaleLabel: {
