@@ -11,14 +11,7 @@
 (function (window) {
   'use strict';
 
-  var config = window.Chartkick || {
-    type: 'line',
-			data: {
-				xLabels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-				yLabels: ['', 'Request Added', 'Request Viewed', 'Request Accepted', 'Request Solved', 'Solving Confirmed']
-			}
-
-  };
+  var config = window.Chartkick || {};
   var Chartkick, ISO8601_PATTERN, DECIMAL_SEPARATOR, adapters = [];
   var DATE_PATTERN = /^(\d\d\d\d)(\-)?(\d\d)(\-)?(\d\d)$/i;
   var GoogleChartsAdapter, HighchartsAdapter, ChartjsAdapter;
@@ -64,8 +57,8 @@
   }
 
   // https://github.com/Do/iso8601.js
-  // ISO8601_PATTERN = /(\d\d\d\d)(\-)?(\d\d)(\-)?(\d\d)(T)?(\d\d)(:)?(\d\d)?(:)?(\d\d)?([\.,]\d+)?($|Z|([\+\-])(\d\d)(:)?(\d\d)?)/i;
-  // DECIMAL_SEPARATOR = String(1.5).charAt(1);
+  ISO8601_PATTERN = /(\d\d\d\d)(\-)?(\d\d)(\-)?(\d\d)(T)?(\d\d)(:)?(\d\d)?(:)?(\d\d)?([\.,]\d+)?($|Z|([\+\-])(\d\d)(:)?(\d\d)?)/i;
+  DECIMAL_SEPARATOR = String(1.5).charAt(1);
 
   function parseISO8601(input) {
     var day, hour, matches, milliseconds, minutes, month, offset, result, seconds, type, year;
@@ -385,103 +378,60 @@
             display: true,
             position: "top",
             labels: {
-              fontStyle: "bold",
-              position: "right"
-              // fontColor: 'rgb(255, 99, 132)'
+              fontStyle: "bold"
             }
-        
           },
-          title: {fontSize: 20, fontColor: "#333", }
+          title: {fontSize: 20, fontColor: "#333"}
         };
 
         var defaultOptions = {
-        responsive: true,
-        title: {
-          display: true
-          // text: "Deborah's Average Energy Statistics"
-        },
-        scales: {
-          yAxes: [{
-            // type: 'category',
-            gridLines: {
-              drawBorder: false
-           
-            },
-            position: 'left',
-            display: true,
-            scaleLabel: {
-              display: true,
-              labelString: 'Levels',
-              fontStyle: "bold"
-            },
-            ticks: {
-              // reverse: true,
-              //  Include a dollar sign in the ticks
-              callback: function(value, index, values) {
-                var deb = ['1', '2', '3', '4', '5']
-                return deb[value] + "  " 
-              },
-               fontStyle: "bold"
-              //  maxRotation: -20,
-              //  minRotation: -20
-            }
-          }],
-          xAxes: [{
-            display: true,
-            scaleLabel: {
-              display: true,
-              labelString: 'Date',
-              fontStyle: "bold"
-            },
-            ticks: {
-              maxRotation: 30,
-              minRotation: 30,
-              fontStyle: "bold"
-              
-            }
-          }]
-          
-        }
-      };
-
-      
-        // var defaultOptions = {
-        //   scales: {
-        //     yAxes: [
-        //       {
-        //         ticks: {
-        //           maxTicksLimit: 4,
-        //           callback: function(value, index, values) {
-        //             return '$' + value;
-        //         }
-        //         },
-        //         scaleLabel: {
-        //           fontSize: 16,
-        //           // fontStyle: "bold",
-        //           fontColor: "#333"
-        //         }
-        //       }
-        //     ],
-        //     xAxes: [
-        //       {
-        //         gridLines: {
-        //           drawOnChartArea: false
-        //         },
-        //         scaleLabel: {
-        //           fontSize: 16,
-        //           // fontStyle: "bold",
-        //           fontColor: "#333"
-        //         },
-        //         time: {},
-        //         ticks: {}
-        //       }
-        //     ]
-        //   }
-        // };
+          scales: {
+            yAxes: [
+              { 
+                ticks: {
+                  display: true,
+                  maxTicksLimit: 5,
+                  fontStyle: "bold"
+                },
+                scaleLabel: {
+                  display: true,
+                  // fontSize: 16,
+                  fontStyle: "bold",
+                  fontColor: "#333",
+                  labelString: "Levels"
+                }
+              }
+            ],
+            xAxes: [
+              {
+                type: 'time',
+                time: {
+                  unit: 'day'
+                },
+                gridLines: {
+                  drawOnChartArea: false
+                },
+                scaleLabel: {
+                  display: true,
+                  // fontSize: 16,
+                  fontStyle: "bold",
+                  fontColor: "#333",
+                  labelString: "Date",
+                  fontStyle: "bold"
+                },
+                ticks: {
+                  maxRotation: 30,
+                  minRotation: 30,
+                  fontStyle: "bold"
+                }
+              }
+            ]
+          }
+        };
 
         // http://there4.io/2012/05/02/google-chart-color-list/
         var defaultColors = [
-          "#FF9900", "#109618", "#990099", "#3B3EAC", "#0099C6",
+          "#758feb", "#109618", "#990099", "#3B3EAC", "#0099C6",
           "#DD4477", "#66AA00", "#B82E2E", "#316395", "#994499", "#22AA99", "#AAAA11",
           "#6633CC", "#E67300", "#8B0707", "#329262", "#5574A6", "#651067"
         ];
@@ -709,12 +659,11 @@
             var dataset = {
               label: s.name,
               data: rows2[i],
-              // fill: false,
               fill: chartType === "area",
               borderColor: color,
               backgroundColor: backgroundColor,
               pointBackgroundColor: color,
-              borderWidth: 3
+              borderWidth: 2
             };
 
             if (s.stack) {
@@ -760,11 +709,11 @@
                 options.scales.xAxes[0].time.unit = "day";
                 step = 1;
               } else if (hour || timeDiff > 0.5) {
-                options.scales.xAxes[0].time.displayFormats = {hour: "MMM D, h a"};
+                options.scales.xAxes[0].time.displayFormats = {hour: "MMM D, h A"};
                 options.scales.xAxes[0].time.unit = "hour";
                 step = 1 / 24.0;
               } else if (minute) {
-                options.scales.xAxes[0].time.displayFormats = {minute: "h:mm a"};
+                options.scales.xAxes[0].time.displayFormats = {minute: "h:mm A"};
                 options.scales.xAxes[0].time.unit = "minute";
                 step = 1 / 24.0 / 60.0;
               }
@@ -784,7 +733,7 @@
               } else if (hour) {
                 options.scales.xAxes[0].time.tooltipFormat = "MMM D, h a";
               } else if (minute) {
-                options.scales.xAxes[0].time.tooltipFormat = "h:mm a";
+                options.scales.xAxes[0].time.tooltipFormat = "ll h:mm a";
               }
             }
           }
@@ -919,7 +868,6 @@
               borderColor: color,
               backgroundColor: backgroundColor,
               pointBackgroundColor: color,
-              // fill: false
               fill: chartType === "area"
             });
           }
@@ -960,9 +908,7 @@
         var Highcharts = window.Highcharts;
 
         var defaultOptions = {
-          chart: {
-            
-          },
+          chart: {},
           xAxis: {
             title: {
               text: null

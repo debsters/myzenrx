@@ -1,5 +1,7 @@
 require './config/environment'
 require 'sinatra/flash'
+require './config/initializers/chartkick.rb'
+
 class ApplicationController < Sinatra::Base
  #==================== CONFIGURATION =======================
   configure do
@@ -20,7 +22,7 @@ class ApplicationController < Sinatra::Base
       erb :'sessions/login'
     end 
   end
-
+  
   #----------------------------------------------------------
 
   #==================== HELPERS =============================
@@ -108,6 +110,16 @@ class ApplicationController < Sinatra::Base
 
     def medications_under_index(string_index)
       Medication.where(:index_id => "#{string_index}")
+    end
+
+    def entry_graph_data(entries)
+      array_mood = []
+      array_energy = []
+      entries.each do |entry| 
+        array_mood << ["#{entry.date_time.strftime("%m/%d/%Y %l:%M %p")}", entry.mood.to_i  ] 
+        array_energy << ["#{entry.date_time.strftime("%m/%d/%Y %l:%M %p")}", entry.energy_level] 
+      end  
+      data = [{name: "Mood", data: array_mood }, {name: "Energy", data: array_energy}]
     end
 
     def logged_in?

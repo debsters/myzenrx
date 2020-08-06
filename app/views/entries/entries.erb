@@ -27,7 +27,7 @@
         </div>
       </div>
       <div class="divTableBody">
-      <% @user.entries.each do |entry| %>
+      <% @entries.each do |entry| %>
       <% entry_med = @user_medications.detect {|h| h[:id] == entry.user_medication_id }%>
       <% user_medication = @user.medications.detect {|h| h[:id] == entry_med.medication_id }%>
         <div class="divTableRow">

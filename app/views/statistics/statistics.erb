@@ -1,9 +1,13 @@
+  <% require 'pry' %>
   <!-- # create a new line chart -->
   <% chart = PiCharts::Line.new %>
   
   <head>  
   <script src="//www.google.com/jsapi"></script>
-  <script src="/javascripts/chartkick.js"></script>
+ 
+   <script src="/javascripts/chartkick.js"></script>
+   
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js" integrity="sha512-rmZcZsyhe0/MAjquhTgiUcb4d9knaFc7b5xAfju483gbEXTkeJRUMIPk6s3ySZMYUHEcjKbjLjyddGWMrNEvZg==" crossorigin="anonymous"></script>
  
   <link rel="stylesheet" href="/stylesheets/statistics/statistics.css">
    <% if !@entries.empty? %>
@@ -13,45 +17,32 @@
   </head>
 
   <body>
-
     <div id="ctn-phone-top" class="container">
     <br>
      
 
     <h1 class="medications"> <%=@user.firstname%>'s Statistics</h1>
-    <div class= "container-mood-energy">
-      <div class="mood-left">
-        <p class="mood-level-p">Mood Levels 1 - 5</p>
-        <img class='moods' src='/stylesheets/images/mood/Moods.png' alt='ZenRx Moods'/>
-      </div>
-      <div class="energy-right">
-        <p class="energy-level-p">Energy Levels 1 - 5</p>
-        <img class='batteries' src='/stylesheets/images/energy/Energies.png' alt='ZenRx Energies'/>
-      </div>
-    </div>
-
-       <% if !@entries.empty? %>
-        <% @@array_mood = [] %>
-        <% @@array_energy = [] %>
-        <% @entries.each do |entry| %>
-            <% @@array_mood << ["#{entry.date_time.strftime("%m/%d/%Y %l:%M %p")}", entry.mood.to_i  ] %>
-            <% @@array_energy << ["#{entry.date_time.strftime("%m/%d/%Y %l:%M %p")}", entry.energy_level] %>
-        <% end  %>
-      <% end %>
-
 
     <div class="graphs">
-      <div class="lamp btn-group" id="graphs" role="group" aria-label="Button group with nested dropdown">
-        <button type="button" id="graphs" class="btn btn-success">Quality of Life</button>
-      </div>
+      
+      <br>
 
-       
       <% if !@entries.empty? %>
-        <%= line_chart( [
-            {name: "Mood Levels", data: @@array_mood },
-            {name: "Energy Levels", data: @@array_energy}
-        
-        ], legend: "bottom" ) %>
+        <% @data.each do |k, v|%>
+          <div class="chart-statistics">
+            <div class= "container-mood-energy">
+              <div class="mood-left">
+                <p class="mood-level-p">Mood Levels 1 - 5</p>
+                <img class='moods' src='/stylesheets/images/mood/Moods.png' alt='ZenRx Moods'/>
+              </div>
+              <div class="energy-right">
+                <p class="energy-level-p">Energy Levels 1 - 5</p>
+                <img class='batteries' src='/stylesheets/images/energy/Energies.png' alt='ZenRx Energies'/>
+              </div>
+            </div>
+              <%= line_chart entry_graph_data(v) %>
+          </div>
+        <% end %>
       <% else %>
         <h1 class="chart-not-enough"> Not enough entries to construct chart!<h1>
       <% end %>

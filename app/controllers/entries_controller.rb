@@ -1,9 +1,11 @@
 require 'time'
+require 'pry'
 class EntriesController < ApplicationController
 
   get '/entries' do
     if logged_in?
       @user = current_user
+      @entries = @user.entries.sort_by { |entry| entry.date_time }
       @user_medications = UserMedication.where(user_id: current_user.id)
       erb :'/entries/entries'
     else
@@ -57,23 +59,31 @@ class EntriesController < ApplicationController
   end
 
   get '/entries/:id' do
-    if logged_in?
-      @user = current_user
-      @entry = Entry.find_by(id: params[:id])
-      @user_medications = UserMedication.where(user_id: current_user.id)
-      erb :'/entries/entry'
+    @entry = Entry.find_by(id: params[:id])
+    if logged_in? 
+      if (@entry != nil) && (@entry.user_id == current_user.id)
+        @user = current_user
+        @user_medications = UserMedication.where(user_id: current_user.id)
+        erb :'/entries/entry'
+      else
+        redirect '/entries'
+      end
     else
-        redirect '/login'
+      redirect '/login'
     end
   end
 
   get '/entries/:id/edit' do
+    @entry = Entry.find_by(id: params[:id])
     if logged_in?
-      @user = current_user
-      @entry = Entry.find_by_id(params[:id])
-      @user_medications = UserMedication.where(user_id: current_user.id)
-      @medications = Medication.joins(:user_medications).where('user_medications.user_id' => current_user)
-      erb :'entries/edit'
+      if (@entry != nil) && (@entry.user_id == current_user.id)
+        @user = current_user
+        @user_medications = UserMedication.where(user_id: current_user.id)
+        @medications = Medication.joins(:user_medications).where('user_medications.user_id' => current_user)
+        erb :'entries/edit'
+      else
+        redirect '/entries'
+      end
     else
       redirect '/login'
     end
