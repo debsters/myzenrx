@@ -17,6 +17,7 @@ gem 'sanitize'
 gem 'pi_charts'
 gem 'chartkick'
 gem 'chartjs-ror'
+gem 'groupdate'
 ruby '2.6.3'
 
 group :development do
