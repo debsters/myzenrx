@@ -54,7 +54,7 @@
     text-align: center;
   }
   .chart-statistics {
-    display: flex;
+    display: block;
     justify-content: center;
     flex-direction: column;
     flex-grow: 1;
@@ -63,15 +63,30 @@
     margin: 1.6rem auto;
     padding: 2.25%;
     width: 85%;
+    padding-bottom: 5rem;
   }
   .carousel-control-prev-icon,
   .carousel-control-next-icon {
-  height: 100px;
-  width: 100px;
-  background-size: 100%, 100%;
-  background-image: none;
+    height: 5px;
+    width: 100px;
+    background-size: 100%, 100%;
+    background-image: none;
   }
-
+  .carousel-control-next {
+    right: 7rem;
+  }
+  .carousel-control-prev {
+    left: 7rem;
+  }
+  .carousel-control-prev, .carousel-control-next {
+    position: absolute;
+    display: inline-flex;
+    justify-content: space-evenly;
+    top: 27rem;
+    bottom: 1rem;
+    width: 0%;
+    opacity: 100%;
+  }
   .carousel-control-next-icon:after {
     content: '>';
     font-size: 2rem;
@@ -89,10 +104,8 @@
     height: 2.5rem;
     display: inline-flex;
     justify-content: center;
-    align-items: center;
-    margin-top: 1rem;
+    align-items: center;  
   }
-
   .carousel-control-prev-icon:after {
     content: '<';
     font-size: 2rem;
@@ -110,8 +123,7 @@
     height: 2.5rem;
     display: inline-flex;
     justify-content: center;
-    align-items: center;
-    margin-top: 1rem;
+    align-items: center;   
   }
   .carousel-indicators li {
     background-color: #073b4c;
@@ -124,19 +136,10 @@
   .carousel-indicators li.active {
     background-color: #1c43b9;
   }
-  a.carousel-control-next {
-    bottom: -85%;
-    right: 2rem;
-    opacity: 100%;
-  }
-  a.carousel-control-prev {
-    bottom: -85%;
-    left: 2rem;
-    opacity: 100%;
-  }
   .carousel-indicators {
-    bottom: -1.5rem;
+    bottom: 2rem;
   }
+  
 
   
 }
@@ -198,7 +201,7 @@
     text-align: center;
   }
   .chart-statistics {
-    display: flex;
+    display: block;
     justify-content: center;
     flex-direction: column;
     flex-grow: 1;
@@ -207,15 +210,30 @@
     margin: 1.6rem auto;
     padding: 2.25%;
     width: 85%;
+    padding-bottom: 5rem;
   }
   .carousel-control-prev-icon,
   .carousel-control-next-icon {
-  height: 100px;
-  width: 100px;
-  background-size: 100%, 100%;
-  background-image: none;
+    height: 5px;
+    width: 100px;
+    background-size: 100%, 100%;
+    background-image: none;
   }
-
+  .carousel-control-next {
+    right: 7rem;
+  }
+  .carousel-control-prev {
+    left: 7rem;
+  }
+  .carousel-control-prev, .carousel-control-next {
+    position: absolute;
+    display: inline-flex;
+    justify-content: space-evenly;
+    top: 27rem;
+    bottom: 1rem;
+    width: 0%;
+    opacity: 100%;
+  }
   .carousel-control-next-icon:after {
     content: '>';
     font-size: 2rem;
@@ -233,10 +251,8 @@
     height: 2.5rem;
     display: inline-flex;
     justify-content: center;
-    align-items: center;
-    margin-top: 1rem;
+    align-items: center;  
   }
-
   .carousel-control-prev-icon:after {
     content: '<';
     font-size: 2rem;
@@ -254,8 +270,7 @@
     height: 2.5rem;
     display: inline-flex;
     justify-content: center;
-    align-items: center;
-    margin-top: 1rem;
+    align-items: center;   
   }
   .carousel-indicators li {
     background-color: #073b4c;
@@ -268,19 +283,10 @@
   .carousel-indicators li.active {
     background-color: #1c43b9;
   }
-  a.carousel-control-next {
-    bottom: -85%;
-    right: 2rem;
-    opacity: 100%;
-  }
-  a.carousel-control-prev {
-    bottom: -85%;
-    left: 2rem;
-    opacity: 100%;
-  }
   .carousel-indicators {
-    bottom: -1.5rem;
+    bottom: 2rem;
   }
+  
 
 
 }
@@ -288,7 +294,10 @@
 /* Phones only */
 @media (min-width:300px) and (max-width:480px) {
   div#ctn-phone-top {
-    position: absolute;
+    position: relative;
+    z-index: 9;
+    top: 3rem;
+    min-height: 100%
   }
   p.mood-level-p {
     color: #fff;
@@ -300,12 +309,12 @@
     line-height: 1.5;
     padding: 6px 4px;
     margin-bottom: 0;
-    font-size: 14px;
+    font-size: 0.7rem;
     font-weight: bold;
     text-align: center;
     border-radius: 4px;
     margin: auto;
-    width: 4rem;
+    width: 100%;
   }
   p.energy-level-p {
     color: #fff;
@@ -317,12 +326,12 @@
     line-height: 1.5;
     padding: 6px 4px;
     margin-bottom: 0;
-    font-size: 14px;
+    font-size: 0.7rem;
     font-weight: bold;
     text-align: center;
     margin: auto;
     border-radius: 4px;
-    width: 4rem;
+    width: 100%;
   }
   img.batteries {
     width: 7rem;
@@ -349,27 +358,42 @@
     text-align: center;
   }
   .chart-statistics {
-    display: flex;
+    display: block;
     justify-content: center;
     flex-direction: column;
     flex-grow: 1;
     background: #f8f8ff;
     box-shadow: 0 0 2rem rgba(41, 30, 53, 0.5);
-    margin: auto;
+    margin: 1.6rem auto;
     padding: 2.25%;
-    width: 100%;
+    width: 85%;
+    padding-bottom: 3rem;
   }
   .carousel-control-prev-icon,
   .carousel-control-next-icon {
-  height: 100px;
-  width: 100px;
-  background-size: 100%, 100%;
-  background-image: none;
+    height: 10px;
+    width: 100px;
+    background-size: 100%, 100%;
+    background-image: none;
   }
-
+  .carousel-control-next {
+    right: 3rem;
+  }
+  .carousel-control-prev {
+    left: 3rem;
+  }
+  .carousel-control-prev, .carousel-control-next {
+    position: absolute;
+    display: inline-flex;
+    justify-content: space-evenly;
+    top: 24rem;
+    bottom: 1rem;
+    width: 0%;
+    opacity: 100%;
+  }
   .carousel-control-next-icon:after {
     content: '>';
-    font-size: 2rem;
+    font-size: 1.4rem;
     color: #fff;
     letter-spacing: -0.2px;
     border: 0;
@@ -380,17 +404,16 @@
     font-weight: bold;
     box-shadow: -5px -5px 20px #FFF, 5px 5px 20px #BABECC;
     border-radius: 5rem;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2.2rem;
+    height: 2.2rem;
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    margin-top: 1rem;
+    flex-direction: column;
   }
-
   .carousel-control-prev-icon:after {
     content: '<';
-    font-size: 2rem;
+    font-size: 1.4rem;
     color: #fff;
     letter-spacing: -0.2px;
     border: 0;
@@ -401,17 +424,17 @@
     font-weight: bold;
     box-shadow: -5px -5px 20px #FFF, 5px 5px 20px #BABECC;
     border-radius: 5rem;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2.2rem;
+    height: 2.2rem;
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    margin-top: 1rem;
+    flex-direction: column;
   }
   .carousel-indicators li {
     background-color: #073b4c;
-    height: 1.75rem;
-    width: 1.75rem;
+    height: 1rem;
+    width: 1rem;
     border-radius: 1.5rem;
     border-top: 0px;
     border-bottom: 0px;
@@ -419,25 +442,22 @@
   .carousel-indicators li.active {
     background-color: #1c43b9;
   }
-  a.carousel-control-next {
-    bottom: -48%;
-    right: 2rem;
-    opacity: 100%;
-  }
-  a.carousel-control-prev {
-    bottom: -48%;
-    left: 2rem;
-    opacity: 100%;
-  }
   .carousel-indicators {
-    bottom: 2.2rem;
+    bottom: 1.5rem;
   }
-  .carousel-item {
-    margin-bottom: 25%;
+  button.btn.btn-secondary.right {
+    font-size: 0.7rem;
   }
-  .carousel-control-prev, .carousel-control-next {
-    position: fixed;  
+  button.btn.btn-secondary.left {
+    font-size: 0.7rem;
   }
+  nav.navbar.navbar-expand-lg.navbar-dark.bg-primary {
+    position: fixed;
+    width: 100%;
+    z-index: 9999;
+  }
+  
+  
 
 
 
