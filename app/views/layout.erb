@@ -120,10 +120,21 @@
             });
         });
       </script>
+      
+      <script>
+        $(document).ready(function(){
+            $('[data-toggle="popover"]').popover({
+                placement : 'top'
+            });
+            $(document).on("click", ".popover .close" , function(){
+                $(this).parents(".popover").popover('hide');
+            });
+        });
+      </script>
 
       <script>
-        $(function () {
-          $('[data-toggle="popover"]').popover()
+        $('.carousel').carousel({
+          interval: 50000
         })
       </script>
       

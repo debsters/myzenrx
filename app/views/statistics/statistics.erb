@@ -17,46 +17,77 @@
   </head>
 
   <body>
-    <div id="ctn-phone-top" class="container">
+  <div id="ctn-phone-top" class="container">
     <br>
-     
 
     <h1 class="medications"> <%=@user.firstname%>'s Statistics</h1>
-
-    <div class="graphs">
-      
-      <br>
-
       <% if !@entries.empty? %>
-        <% @data.each do |k, v|%>
-          <div class="chart-statistics">
-            <div class= "container-mood-energy">
-              <div class="mood-left">
-                <p class="mood-level-p">Mood Levels 1 - 5</p>
-                <img class='moods' src='/stylesheets/images/mood/Moods.png' alt='ZenRx Moods'/>
+      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <% @data.each_with_index do |(key, val), i| %>
+            <% if i == 0 %>
+              <li data-target="#carouselExampleIndicators" data-slide-to="<% i %>" class="active"></li>
+            <% else %>
+              <li data-target="#carouselExampleIndicators" data-slide-to="<% i %>"></li>
+            <% end %>
+          <% end %>
+        </ol>
+        <div class="carousel-inner">
+          <% @data.each_with_index do |(key, val), i| %>
+            <% if i == 0 %>
+              <div class="carousel-item active">
+                <div class="chart-statistics">
+                  <div class= "container-mood-energy">
+                    <div class="mood-left">
+                      <p class="mood-level-p">Mood Levels 1 - 5</p>
+                      <img class='moods' src='/stylesheets/images/mood/Moods.png' alt='ZenRx Moods'/>
+                    </div>
+                    <div class="energy-right">
+                      <p class="energy-level-p">Energy Levels 1 - 5</p>
+                      <img class='batteries' src='/stylesheets/images/energy/Energies.png' alt='ZenRx Energies'/>
+                    </div>
+                  </div>
+                    <%= line_chart entry_graph_data(val) %>
+                </div>
               </div>
-              <div class="energy-right">
-                <p class="energy-level-p">Energy Levels 1 - 5</p>
-                <img class='batteries' src='/stylesheets/images/energy/Energies.png' alt='ZenRx Energies'/>
+            <% else %>
+              <div class="carousel-item">
+                    <div class="chart-statistics">
+                      <div class= "container-mood-energy">
+                        <div class="mood-left">
+                          <p class="mood-level-p">Mood Levels 1 - 5</p>
+                          <img class='moods' src='/stylesheets/images/mood/Moods.png' alt='ZenRx Moods'/>
+                        </div>
+                        <div class="energy-right">
+                          <p class="energy-level-p">Energy Levels 1 - 5</p>
+                          <img class='batteries' src='/stylesheets/images/energy/Energies.png' alt='ZenRx Energies'/>
+                        </div>
+                      </div>
+                        <%= line_chart entry_graph_data(val) %>
+                    </div>
               </div>
-            </div>
-              <%= line_chart entry_graph_data(v) %>
-          </div>
-        <% end %>
+            <% end %>
+          <% end %>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
       <% else %>
         <h1 class="chart-not-enough"> Not enough entries to construct chart!<h1>
       <% end %>
 
-        <div class="cobra"></div> 
-        <div class="btn-bottom into-footer">
-          <button type="button" class="btn btn-secondary left" data-toggle="popover" title="Graphs & Charts" data-content="Coming Soon! Still under construction!"><img  src="/charts/chart.png" alt="ZenRx Chart"/><text class="button-graph"> Graphs & Charts</text></button>
-          <button type="button" class="btn btn-secondary right" data-toggle="popover" title="Printable Reports" data-content="Coming Soon! Still under construction!"><img  src="/charts/pdf.png" alt="ZenRx Chart"/><text class="button-graph"> Printable Reports</text></button>
-        </div>
-    </div>
-
-  
+      <div class="btn-bottom into-footer">
+        <button type="button" class="btn btn-secondary left" data-toggle="popover" title="Graphs & Charts" data-content="Coming Soon! Still under construction!"><img  src="/charts/chart.png" alt="ZenRx Chart"/><text class="button-graph"> Graphs & Charts</text></button>
+        <button type="button" class="btn btn-secondary right" data-toggle="popover" title="Printable Reports" data-content="Coming Soon! Still under construction!"><img  src="/charts/pdf.png" alt="ZenRx Chart"/><text class="button-graph"> Printable Reports</text></button>
+      </div>
     
-  </body>
+</body>
 
-  <div class="push"></div> 
+<div class="push"></div> 
 </div>
