@@ -39,8 +39,8 @@
           <div class="divTableCell"><text class="view-phone">Dose Strength</text><%= @entry.dose_strength %></div>
           <div class="divTableCell"><text class="view-phone">Day Dose Interval</text><%= @entry.dose_interval %></div>
           <div class="divTableCell"><text class="view-phone">Med Take Effect</text><%= @entry.med_take_effect %></div>
-          <div class="divTableCell"><text class="view-phone">Med Took Effect At</text><%= @entry.med_took_effect %></div>
-          <div class="divTableCell"><text class="view-phone">Med Stopped Effect At</text><%= @entry.med_stopped_time %></div>
+          <div class="divTableCell"><text class="view-phone">Med Took Effect At</text><%= applicable?(@entry.med_took_effect) %></div>
+          <div class="divTableCell"><text class="view-phone">Med Stopped Effect At</text><%= applicable?(@entry.med_stopped_time) %></div>
           <div class="divTableCell"><text class="view-phone">Med Effect Lasted</text><%= elapsed(@entry.med_lasted) %></div>
            <div class="divTableCell"><text class="view-phone">Ate Food</text><%= @entry.food_ate %></div>
         </div>
@@ -92,3 +92,4 @@
 
   <div class="push"></div> 
 </div>
+

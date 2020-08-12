@@ -45,7 +45,19 @@ class ApplicationController < Sinatra::Base
 
     def elapsed(string)
       array = JSON.parse(string)
-      "#{array[0]} Hours #{array[1]} Minutes"
+      if !((array[0] == 0) && (array[1] == 0))
+        "#{array[0]} Hours #{array[1]} Minutes"
+      else
+        "N/A"
+      end
+    end
+
+    def applicable?(string)
+      if string == "empty"
+        string = "N/A"
+      else
+        string
+      end
     end
 
     def view_mode_input(params_hash)

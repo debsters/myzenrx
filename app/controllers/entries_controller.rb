@@ -1,5 +1,4 @@
 require 'time'
-require 'pry'
 class EntriesController < ApplicationController
 
   get '/entries' do
@@ -26,11 +25,13 @@ class EntriesController < ApplicationController
 
   post '/entries' do
     view_mode_input(params[:entry])
- 
-    if !((params[:entry]["med_took_effect"].empty?) && (params[:entry]["med_stopped_time"].empty?))
+
+    if !((params[:entry]["med_took_effect"] == "empty") && (params[:entry]["med_stopped_time"] == "empty"))
       start_time = Time.parse(params[:entry]["med_took_effect"]).strftime("%H:%M")
       finish_time = Time.parse(params[:entry]["med_stopped_time"]).strftime("%H:%M")
       params[:entry]["med_lasted"] = time_elapsed(start_time, finish_time)
+    else
+      params[:entry]["med_lasted"] = [0, 0]
     end
     
     if params[:entry]["user_medication_id"].empty?
@@ -129,6 +130,10 @@ class EntriesController < ApplicationController
   end
 
 end
+
+
+
+
 
 
 

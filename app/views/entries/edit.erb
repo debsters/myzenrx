@@ -134,7 +134,7 @@
                 </select>
               </div>
               <div class="divTableCell">
-                <select name="entry[med_take_effect][1]" id="dropdown">
+                <select class="form-control" name="entry[med_take_effect][1]" id="seeAnotherField">
                   <option value="<%= @entry.med_take_effect %>" selected=""><%= @entry.med_take_effect %></option>
                   <option value="YES">YES</option>
                   <option value="NO">NO</option>
@@ -144,26 +144,30 @@
           </div>
         </div>
 		  </div>
-		
+
 			<div class="view-desktop">
-				<div>
-					<label class="entries-two" for="title">Med Took Effect Time:</label>
-					<label class= "entries-three" id="label-two" for="title">Med Stopped Time:</label>
-				</div>
-				<div class="datetimepicker-div">
-					<div class="input-group date" id="dp2">
-						<input class="form-control" type="text" name="entry[med_took_effect][1]" placeholder="Med Took Effect Time" value="<%= @entry.med_took_effect %>" />
-						<span class="input-group-addon">
-							<span class="fas fa-clock"></span>
-						</span>
-					</div>
-					<div class="input-group date" id="dp3">
-						<input class="form-control" type="text" name="entry[med_stopped_time][1]" placeholder="Med Stopped Time" value="<%= @entry.med_stopped_time %>" />
-						<span class="input-group-addon">
-							<span class="fas fa-clock"></span>
-						</span>
-					</div>
-				</div>
+        <div class="form-group" id="otherFieldDiv">
+          <div class="row">
+            <div class="col-6">
+              <label for="otherFieldOne" class="entries-two">Med Took Effect Time:</label>
+              <div class="input-group date" id="dp2">
+                <input type="text" name="entry[med_took_effect][1]" class="form-control w-100" id="otherFieldOne" placeholder="Med Took Effect Time" value="<%= @entry.med_took_effect %>" />
+                <span class="input-group-addon">
+                  <span class="fas fa-clock"></span>
+                </span>
+              </div>
+            </div>
+            <div class="col-6">
+              <label for="otherFieldTwo" class="entries-three">Med Stopped Time:</label>
+              <div class="input-group date" id="dp3">
+                <input type="text" name="entry[med_stopped_time][1]" class="form-control w-100" id="otherFieldTwo" placeholder="Med Stopped Time" value="<%= @entry.med_stopped_time %>" />
+                <span class="input-group-addon">
+                  <span class="fas fa-clock"></span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
 			</div>
 			<% end %>
 
@@ -287,7 +291,7 @@
 					<tbody>
 						<tr>
 							<th class="bigger-font" scope="row">
-								<select name="entry[med_take_effect][2]" id="dropdown">
+								<select name="entry[med_take_effect][2]" class="seeAnotherFieldGroup" id="dropdown">
                   <option value="<%= @entry.med_take_effect %>" selected=""><%= @entry.med_take_effect %></option>
                   <option value="YES">YES</option>
                   <option value="NO">NO</option>
@@ -300,17 +304,17 @@
 			</div>
 
 			<div class="view-phone">
-				<div class="datetimepicker-div">
-				<label class="entries-two" for="title">Med Took Effect Time:</label>
+				<div class="datetimepicker-div" id="otherFieldGroupDiv">
+				<label for="otherField1" class="entries-two">Med Took Effect Time:</label>
 					<div class="input-group date" id="dp2phone">
-						<input class="form-control" type="text" name="entry[med_took_effect][2]" placeholder="Med Took Effect Time" value="<%= @entry.med_took_effect %>" />
+						<input class="form-control" id="otherField1" type="text" name="entry[med_took_effect][2]" placeholder="Med Took Effect Time" value="<%= @entry.med_took_effect %>" />
 						<span class="input-group-addon">
 							<span class="fas fa-clock"></span>
 						</span>
 					</div>
-					<label class= "entries-three" id="label-two" for="title">Med Stopped Time:</label>
+					<label for="otherField2" class= "entries-three" id="label-two">Med Stopped Time:</label>
 					<div class="input-group date" id="dp3phone">
-						<input class="form-control" type="text" name="entry[med_stopped_time][2]" placeholder="Med Stopped Time" value="<%= @entry.med_stopped_time %>" />
+						<input class="form-control" id="otherField2" type="text" name="entry[med_stopped_time][2]" placeholder="Med Stopped Time" value="<%= @entry.med_stopped_time %>" />
 						<span class="input-group-addon">
 							<span class="fas fa-clock"></span>
 						</span>
@@ -332,6 +336,46 @@
 
   <div class="push"></div> 
 </div>
+
+<script>
+  $("#seeAnotherField").change(function() {
+    if ($(this).val() == "YES") {
+      $('#otherFieldDiv').show();
+      $('#otherFieldOne').attr('required', '');
+      $('#otherFieldOne').attr('data-error', 'This field is required.');
+      $('#otherFieldTwo').attr('required', '');
+      $('#otherFieldTwo').attr('data-error', 'This field is required.');
+    } else {
+      $('#otherFieldDiv').hide();
+      $('#otherFieldOne').val('empty');
+      $('#otherFieldTwo').val('empty');
+      $('#otherFieldOne').removeAttr('required');
+      $('#otherFieldOne').removeAttr('data-error');
+      $('#otherFieldTwo').removeAttr('required');
+      $('#otherFieldTwo').removeAttr('data-error');
+    }
+  });
+  $("#seeAnotherField").trigger("change");
+
+	$(".seeAnotherFieldGroup").change(function() {
+		if ($(this).val() == "YES") {
+			$('#otherFieldGroupDiv').show();
+			$('#otherField1').attr('required', '');
+			$('#otherField1').attr('data-error', 'This field is required.');
+			$('#otherField2').attr('required', '');
+			$('#otherField2').attr('data-error', 'This field is required.');
+		} else {
+			$('#otherFieldGroupDiv').hide();
+      $('#otherField1').val('empty');
+      $('#otherField2').val('empty');
+			$('#otherField1').removeAttr('required');
+			$('#otherField1').removeAttr('data-error');
+			$('#otherField2').removeAttr('required');
+			$('#otherField2').removeAttr('data-error');
+		}
+	});
+	$(".seeAnotherFieldGroup").trigger("change");
+</script>
 
 
 <script>
@@ -406,3 +450,4 @@
 </script>
 
 <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
