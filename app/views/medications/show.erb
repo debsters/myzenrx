@@ -5,7 +5,7 @@
 		<section>
 			<% user_med = @user_medication %>
 			<% if user_med != nil %>
-				<% status = user_med.active == 1 ? "<text class='status-word-active'>Active</text>" : "<text class='status-word-deactivated'>Deactivated</text>" %>
+				<% status = user_med.currently_taking == 1 ? "<text class='status-word-active'>Active</text>" : "<text class='status-word-deactivated'>Deactivated</text>" %>
 			<h2><%= @medication.name %> <%= status %></h2>
 			<% else %>
 				<h2><%= @medication.name %></h2>
@@ -35,8 +35,8 @@
 						<input type='hidden' name='user_medication[medication_id]' value='<%=@medication.id%>'>
 						<input type='hidden' name='user_medication[user_id]' value='<%=@user.id%>'>
 						<label for="entry[user_medication_id]">Select whether to Activate or Deactivate medication:</label><br>
-						<input type="radio" name="user_medication[active]" id="<%= user_med.id %>" value="1" <%= 'checked' if user_med.active == 1 %>><text class="text-add-med-option"> Activate </text></input><br>
-						<input type="radio" name="user_medication[active]" id="<%= user_med.id %>" value="2" <%= 'checked' if user_med.active == 2 %>><text class="text-add-med-option"> Deactivate </text></input><br><br>
+						<input type="radio" name="user_medication[currently_taking]" id="<%= user_med.id %>" value="1" <%= 'checked' if user_med.currently_taking == 1 %>><text class="text-add-med-option"> Activate </text></input><br>
+						<input type="radio" name="user_medication[currently_taking]" id="<%= user_med.id %>" value="2" <%= 'checked' if user_med.currently_taking == 2 %>><text class="text-add-med-option"> Deactivate </text></input><br><br>
 						<input class='button' type='submit' value='Submit'>
 					</form>
 				<% end %>

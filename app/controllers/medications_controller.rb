@@ -24,7 +24,7 @@ class MedicationsController < ApplicationController
 		@user = User.find_by(id: params[:user_medication][:user_id])
 		if logged_in?
       if @user.id == current_user.id
-        UserMedication.where(user_id: @user.id, medication_id: @medication.id, active: 1).first_or_create
+        UserMedication.where(user_id: @user.id, medication_id: @medication.id, currently_taking: 1).first_or_create
         redirect "/medications/#{@medication.id}"
       else
         redirect "/medications"
@@ -37,7 +37,7 @@ class MedicationsController < ApplicationController
 	post '/medications' do
 		if logged_in?
 			@user = current_user
-			user_med = UserMedication.new(active: 1)
+			user_med = UserMedication.new(currently_taking: 1)
 			new_med = user_med.create_medication(name: params["medication"]["name"], source: "user_id: #{current_user.id}", index_id: "#{params["medication"]["name"]}".initial.to_number)
 			new_med.save
 			user_med.user = current_user

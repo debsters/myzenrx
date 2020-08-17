@@ -6,7 +6,7 @@ class CreateEntries < ActiveRecord::Migration
       t.string    :dose_form
       t.string    :dose_strength
       t.integer   :dose_interval
-      t.string    :mood
+      t.integer   :mood
       t.integer   :energy_level
       t.string    :food_ate
       t.string    :med_take_effect

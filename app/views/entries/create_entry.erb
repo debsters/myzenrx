@@ -27,14 +27,14 @@
 		<% end %>
 
 		<h3 class="new-entry">New Entry</h3>
-		<form method="POST" action="/entries">
+		<form method="POST" action="/entries" id="form">	
 			<div class="top-form clearfix">
 				<div class="top-form-left">
 					<label for="entry[user_medication_id]">Select an entry medication from your current medications:</label>
 					<br>
 					<% @user_medications.each do |user_med| %>
 						<% medication = @medications.detect {|h| h[:id] == user_med.medication_id }%>
-						<% if user_med.active == 1 %>
+						<% if user_med.currently_taking == 1 %>
 							<input type="radio" name="entry[user_medication_id]" id="<%= user_med.id %>" value="<%= user_med.id %>"><text class="text-add-med-option"> <%= medication.name %></text></input><br>
 						<% end %>
 					<% end %>
@@ -164,8 +164,7 @@
           </div>
         </div>
 			</div>
-
-
+			
 			<div class="view-phone">
 				<div class="datetimepicker-div">
 					<label class="entries-date-time" for="entry date and time">Entry Date and Time:</label>
@@ -347,8 +346,6 @@
 	});
 	$(".seeAnotherFieldGroup").trigger("change");
 </script>
-
-
 
 <script>
   //default intialize

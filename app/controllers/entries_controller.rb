@@ -36,7 +36,7 @@ class EntriesController < ApplicationController
     
     if params[:entry]["user_medication_id"].empty?
       if !params["medication"]["name"].empty?
-        user_med = UserMedication.new(active: 1)
+        user_med = UserMedication.new(currently_taking: 1)
         new_med = user_med.create_medication(name: params["medication"]["name"], source: "user_id: #{current_user.id}", index_id: "#{params["medication"]["name"]}".initial.to_number)
         new_med.save
         user_med.user = current_user
@@ -102,7 +102,7 @@ class EntriesController < ApplicationController
     
     if params[:entry]["user_medication_id"].empty?
       if !params["medication"]["name"].empty?
-        user_med = UserMedication.new(active: 1)
+        user_med = UserMedication.new(currently_taking: 1)
         new_med = user_med.create_medication(name: params["medication"]["name"], source: "user_id: #{current_user.id}", index_id: "#{params["medication"]["name"]}".initial.to_number)
         new_med.save
         user_med.user = current_user

@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20200728213022) do
     t.string   "dose_form"
     t.string   "dose_strength"
     t.integer  "dose_interval"
-    t.string   "mood"
+    t.integer  "mood"
     t.integer  "energy_level"
     t.string   "food_ate"
     t.string   "med_take_effect"
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 20200728213022) do
   create_table "user_medications", force: :cascade do |t|
     t.integer "user_id"
     t.integer "medication_id"
-    t.integer "active"
+    t.integer "currently_taking"
   end
 
   create_table "users", force: :cascade do |t|

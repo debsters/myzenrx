@@ -3,7 +3,7 @@ class CreateUserMedications < ActiveRecord::Migration
     create_table :user_medications do |t|
       t.integer :user_id 
       t.integer :medication_id
-      t.integer :active
+      t.integer :currently_taking
     end
   end
 end

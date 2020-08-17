@@ -5,6 +5,10 @@ body {
   -o-background-size: cover;
   background-size: cover;
 }
+button.unique-form-page.cancel {
+  width: 100%;
+  margin-top: 1rem;
+}
 
 .divTableCell.notes-table {
   background: lightblue;
@@ -377,7 +381,10 @@ and also iPads specifically.
 @media 
 only screen and (max-width: 760px),
 (min-device-width: 768px) and (max-device-width: 1024px)  {
-
+  button.unique-form-page.cancel {
+    width: 100%;
+    margin-top: 1rem;
+  }
   div#ctn-phone-top {
     position: relative;
     z-index: 9;

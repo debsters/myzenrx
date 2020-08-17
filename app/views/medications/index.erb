@@ -23,7 +23,9 @@
     <tbody>
       <%  medications_under_index("#{index.id}").each do |medication|%>
       <tr>
+        <% if ((medication.source == "FDA") || (medication.source == "Multum")) %>
         <th class="bigger-font" scope="row"><a href="/medications/<%=medication.id%>"><%= medication.name %></a></th>
+        <% end %>
       </tr>
       <% end %>
     </tbody>

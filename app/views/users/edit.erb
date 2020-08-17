@@ -1,0 +1,20 @@
+<div id="ctn-phone-top" class="container">
+  <br>
+  
+    <%= "Must include email and password" if @user && @user.errors.any? %>
+    <wrapper class="unique-form-page">
+      <form class="unique-form-page" role="form" action="/registrations/<%= @user.id %>" accept-charset="UTF-8" method="POST">
+      <input id="hidden" type="hidden" name="_method" value="PATCH">
+        <img class="logo" src="/stylesheets/images/logo/logo.png" alt="ZenRx"/>
+        <label class="unique-form-page" for="user-firstname"><input class="unique-form-page" type="text" name="user[firstname]" id="firstname" value="<%= @user.firstname %>" placeholder="First Name" required/></label>
+        <label class="unique-form-page" for="user-lastname"><input class="unique-form-page" type="text" name="user[lastname]" id="lastname" value="<%= @user.lastname %>" placeholder="Last Name" required/></label>
+        <label class="unique-form-page" for="user-username"><input class="unique-form-page" type="text" name="user[username]" id="username" value="<%= @user.username %>" placeholder="Username" required/></label>
+        <label class="unique-form-page" for="user-email"><input class="unique-form-page" type="text" name="user[email]" id="email" value="<%= @user.email %>" placeholder="Email Address" required/></label>
+        <label class="unique-form-page" for="user-password"><input class="unique-form-page" type="password" name="user[password]" id="password" value="<%= @user.password %>" placeholder="Password" required/></label>
+        <button class="unique-form-page red" type="submit"><i class="icon fa fa-lock" aria-hidden="true"></i> Save Edits</button>
+        <button type="button" class="unique-form-page cancel" onclick="window.location.href='/entries'">Cancel</button>	
+      </form>
+    </wrapper>
+
+  <div class="push"></div> 
+</div>

@@ -89,15 +89,15 @@ class ApplicationController < Sinatra::Base
     end
 
     def mood_icon(mood)
-      if mood == "1"
+      if mood == 1
         "<img class='emoji' src='/stylesheets/images/mood/1.Amazing.png' alt='ZenRx Amazing Mood'/>"
-      elsif mood == "2"
+      elsif mood == 2
         "<img class='emoji' src='/stylesheets/images/mood/2.Happy.png' alt='ZenRx Happy Mood'/>"
-      elsif mood == "3"
+      elsif mood == 3
         "<img class='emoji' src='/stylesheets/images/mood/3.Normal.png' alt='ZenRx Normal Mood'/>"
-      elsif mood == "4"
+      elsif mood == 4
         "<img class='emoji' src='/stylesheets/images/mood/4.Horrible.png' alt='ZenRx Sad Mood'/>"
-      elsif mood == "5"
+      elsif mood == 5
         "<img class='emoji' src='/stylesheets/images/mood/5.Awful.png' alt='ZenRx Awful Mood'/>"
       else
         "Not able to read mood level"
@@ -128,7 +128,7 @@ class ApplicationController < Sinatra::Base
       array_mood = []
       array_energy = []
       entries.each do |entry| 
-        array_mood << ["#{entry.date_time.strftime("%m/%d/%Y %l:%M %p")}", entry.mood.to_i  ] 
+        array_mood << ["#{entry.date_time.strftime("%m/%d/%Y %l:%M %p")}", entry.mood] 
         array_energy << ["#{entry.date_time.strftime("%m/%d/%Y %l:%M %p")}", entry.energy_level] 
       end  
       data = [{name: "Mood", data: array_mood }, {name: "Energy", data: array_energy}]
