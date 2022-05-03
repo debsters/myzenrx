@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem 'sinatra', '~> 2.0.2'
+gem 'sinatra', '~> 2.2.0'
 gem 'activerecord', '~> 4.2', '>= 4.2.6', :require => 'active_record'
 gem 'sinatra-activerecord', :require => 'sinatra/activerecord'
 gem 'pry'
